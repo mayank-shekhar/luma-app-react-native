@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
-    // backgroundColor: '#fff',
     padding: 20,
   },
 
@@ -23,15 +22,12 @@ export default StyleSheet.create({
   },
 
   heroImageContainer: {
-    // width: '90%',
     alignItems: 'center',
   },
 
   heroImage: {
     resizeMode: 'contain',
-    width: '85%',
-    // height: 200,
-    // borderRadius: 20,
+    width: '80%',
   },
 
   heroText: {
