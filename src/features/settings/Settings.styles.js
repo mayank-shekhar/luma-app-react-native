@@ -40,4 +40,20 @@ export default StyleSheet.create({
     paddingHorizontal: 8,
     fontSize: 12,
   },
+  textNote: {
+    fontSize: 14,
+  },
+  settingsListItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    marginLeft: 20,
+    paddingRight: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    alignItems: 'center',
+  },
+  footnoteWrapper: {
+    paddingHorizontal: 20,
+  },
 });

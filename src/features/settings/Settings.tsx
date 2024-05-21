@@ -1,14 +1,29 @@
 import * as React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, Modal, SafeAreaView, Alert} from 'react-native';
 
 import styles from './Settings.styles';
-import {CustomFlatList} from '../../components';
+import commonStyles from '../../styles/common.styles';
+import TermsModalContent from './TermsModalContent/TermsModalContent';
+// import {CustomFlatList} from '../../components';
 
 function SettingsScreen() {
+  const [termsModalVisible, setTermsModalVisible] = React.useState(false);
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.header}>Settings</Text>
+      <SafeAreaView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={termsModalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setTermsModalVisible(!termsModalVisible);
+          }}>
+          <TermsModalContent onClose={() => setTermsModalVisible(false)} />
+        </Modal>
+      </SafeAreaView>
 
+      <Text style={styles.header}>Settings</Text>
       {/* Test section */}
       <View style={styles.settingsSectionWrapper}>
         <Text style={styles.sectionHeader}>Test</Text>
@@ -27,16 +42,24 @@ function SettingsScreen() {
       <View style={styles.settingsSectionWrapper}>
         <Text style={styles.sectionHeader}>Application</Text>
         <View style={styles.sectionContainer}>
-          <View>
-            <CustomFlatList
-              data={[{id: '1', title: 'App', description: 'test'}]}
-            />
+          <View style={styles.settingsListItem}>
+            <Text style={styles.textNote}>Terms of use</Text>
+            <View style={styles.buttonWrapepr}>
+              <Button title="View" onPress={() => setTermsModalVisible(true)} />
+            </View>
           </View>
-          {/* <View style={styles.testSection}>
-            <Button>In-App Message</Button>
-            <Button>Push Notification</Button>
-          </View> */}
+          <View style={styles.settingsListItem}>
+            <Text style={styles.textNote}>Tracking is allowed...</Text>
+            <View style={styles.buttonWrapepr}>
+              <Button title="App settings" />
+            </View>
+          </View>
         </View>
+      </View>
+      <View style={styles.footnoteWrapper}>
+        <Text style={commonStyles.footnote}>
+          Open App settings for Luma to set tracking preferences...
+        </Text>
       </View>
     </View>
   );
