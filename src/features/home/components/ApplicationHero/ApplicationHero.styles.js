@@ -9,12 +9,10 @@ export default StyleSheet.create({
   header: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#000',
     marginVertical: 10,
   },
 
   heroSection: {
-    backgroundColor: '#fff',
     borderRadius: 20,
     padding: 10,
     flexDirection: 'column',
@@ -32,7 +30,6 @@ export default StyleSheet.create({
 
   heroText: {
     fontSize: 14,
-    color: '#000',
     marginTop: 5,
   },
 

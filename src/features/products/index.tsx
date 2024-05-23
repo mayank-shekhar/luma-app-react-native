@@ -7,8 +7,11 @@ import {useEffect} from 'react';
 import {loadProducts} from '../../api';
 import {Products} from '../../models/Products.ts';
 import {FullScreenLoader} from '../../components/index.ts';
+import {useTheme} from '@react-navigation/native';
 
 function ProductsScreen({navigation}: {navigation: any}) {
+  const {colors} = useTheme();
+
   const [products, setProducts] = React.useState<Products>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
 
@@ -38,7 +41,9 @@ function ProductsScreen({navigation}: {navigation: any}) {
     <ScrollView>
       <View style={productsCommonStyles.wrapper}>
         {Platform.OS === 'ios' && (
-          <Text style={productsCommonStyles.header}>Products</Text>
+          <Text style={[productsCommonStyles.header, {color: colors.text}]}>
+            Products
+          </Text>
         )}
         {products.length > 0 && (
           <>

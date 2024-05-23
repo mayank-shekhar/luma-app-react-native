@@ -9,7 +9,6 @@ export default StyleSheet.create({
     alignContent: 'center',
   },
   productsBox: {
-    backgroundColor: '#fff',
     borderRadius: Platform.OS === 'ios' ? 20 : 0,
     padding: 10,
     flexDirection: 'column',
@@ -20,9 +19,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     width: 100,
     margin: 10,
-    borderColor: '#f0f0f0',
-    borderWidth: 1,
-    borderRadius: 10,
   },
   productImage: {
     // flex: 1,
@@ -30,5 +26,6 @@ export default StyleSheet.create({
   productTitle: {
     overflow: 'hidden',
     fontSize: 12,
+    marginTop: 10,
   },
 });

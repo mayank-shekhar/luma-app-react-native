@@ -10,26 +10,18 @@ const shadow = {
 
 export default StyleSheet.create({
   wrapper: {
-    // flex: 1,
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 0,
     paddingTop: Platform.OS === 'ios' ? 50 : 20,
-    // backgroundColor: Platform.OS === 'ios' ? '#f0f0f0' : '#fff',
   },
 
   sectionWrapper: {
-    backgroundColor: Platform.OS === 'ios' ? '#f0f0f0' : '#fff',
     marginTop: 20,
-    borderWidth: Platform.OS === 'ios' ? 0 : 1,
-    borderColor: '#f0f0f0',
-    ...(Platform.OS === 'android' ? shadow : {}),
   },
 
   header: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#000',
     marginVertical: 10,
-    // marginTop: 20,
   },
 
   subheader: {

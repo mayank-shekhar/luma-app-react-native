@@ -3,6 +3,7 @@ import {View, Text} from 'react-native';
 
 import styles from './Identities.styles';
 import {CustomFlatList} from '../../../../components';
+import {useTheme} from '@react-navigation/native';
 
 type ItemType = {
   id: string;
@@ -28,11 +29,12 @@ const DATA: ItemType[] = [
 ];
 
 function IdentitiesList() {
+  const {colors} = useTheme();
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.header}>Identities</Text>
+      <Text style={[styles.header, {color: colors.text}]}>Identities</Text>
       <CustomFlatList data={DATA} />
-      <Text style={styles.footnote}>
+      <Text style={[styles.footnote, {color: colors.text}]}>
         If tracking is allowed, use the Person button to login using a new or
         existing email address...
       </Text>

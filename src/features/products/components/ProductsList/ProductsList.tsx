@@ -1,12 +1,13 @@
-import {Text, View, Image, Button, Pressable} from 'react-native';
+import {Text, View, Image, Pressable} from 'react-native';
 import * as React from 'react';
 import {Product} from '../../../../models/Products';
 import productsCommonStyles from '../../products.common.styles';
 import ProductsListStyles from './ProductsList.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ProductDetails} from '..';
+// import {ProductDetails} from '..';
 import {sanitizeProductCategory} from '../../../../utils/stringModifiers';
+import {useTheme} from '@react-navigation/native';
 
 // const ProductStack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function ProductsList({
   products,
   navigation,
 }: ProductsListProps) {
+  const {colors} = useTheme();
   const categoryWiseProducts = products.reduce((acc, product) => {
     if (!acc[product.category]) {
       acc[product.category] = [];
@@ -34,21 +36,22 @@ export default function ProductsList({
   const renderItem = ({item, isLast}: {item: Product; isLast: boolean}) => {
     return (
       <Pressable key={item.sku} onPress={() => onViewDetails(item)}>
-        <View
-          style={[
-            ProductsListStyles.productsListItem,
-            isLast ? ProductsListStyles.lastItem : {},
-          ]}
-          key={item.sku}>
+        <View style={ProductsListStyles.productsListItem} key={item.sku}>
           <View style={ProductsListStyles.productImageContainer}>
             <Image
               source={{uri: item.imageUrl}}
               style={ProductsListStyles.productImage}
             />
           </View>
-          <View style={ProductsListStyles.productInfo}>
+          <View
+            style={[
+              ProductsListStyles.productInfo,
+              {borderBottomWidth: isLast ? 0 : 1, borderColor: colors.border},
+            ]}>
             <View style={ProductsListStyles.productTitle}>
-              <Text numberOfLines={1}>{item.name}</Text>
+              <Text numberOfLines={1} style={{color: colors.text}}>
+                {item.name}
+              </Text>
             </View>
             <View style={ProductsListStyles.arrow}>
               {/* <Button title="View details" onPress={() => onViewDetails(item)}> */}
@@ -68,7 +71,11 @@ export default function ProductsList({
             {sanitizeProductCategory(item)}
           </Text>
         </View>
-        <View style={ProductsListStyles.productsList}>
+        <View
+          style={[
+            ProductsListStyles.productsList,
+            {backgroundColor: colors.card},
+          ]}>
           {categoryWiseProducts[item].map((product, index) => {
             return renderItem({
               item: product,

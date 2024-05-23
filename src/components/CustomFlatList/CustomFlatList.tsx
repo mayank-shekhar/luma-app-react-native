@@ -3,6 +3,7 @@ import * as React from 'react';
 import {FlatList, SafeAreaView, ListRenderItemInfo} from 'react-native';
 import Item, {DataItemType} from './Item';
 import styles from './CustomFlatList.styles';
+import {useTheme} from '@react-navigation/native';
 
 type CustomFlatListProps = {
   data: DataItemType[];
@@ -11,6 +12,7 @@ type CustomFlatListProps = {
 };
 
 function CustomFlatList(props: CustomFlatListProps) {
+  const colors = useTheme().colors;
   const {data, renderItem, keyExtractor} = props;
 
   const renderListItem = (params: ListRenderItemInfo<DataItemType>) => {
@@ -22,7 +24,8 @@ function CustomFlatList(props: CustomFlatListProps) {
 
   const getKeyExtractor = keyExtractor || (item => item.id);
   return (
-    <SafeAreaView style={styles.listContainer}>
+    <SafeAreaView
+      style={[styles.listContainer, {backgroundColor: colors.card}]}>
       <FlatList
         data={data}
         renderItem={renderListItem}

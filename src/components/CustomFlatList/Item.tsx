@@ -1,3 +1,4 @@
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
@@ -10,15 +11,18 @@ export type DataItemType = {
 };
 
 const Item: React.FC<DataItemType> = props => {
+  const {colors} = useTheme();
   const {title, description, isLast} = props;
   let itemStyle = styles.listItem;
   if (isLast) {
     itemStyle = styles.listItemLast;
   }
   return (
-    <View style={itemStyle}>
-      <Text style={styles.identityName}>{title}:</Text>
-      <Text style={styles.identityDescription}>{description}</Text>
+    <View style={[itemStyle, {borderColor: colors.border}]}>
+      <Text style={[styles.identityName, {color: colors.text}]}>{title}:</Text>
+      <Text style={[styles.identityDescription, {color: colors.text}]}>
+        {description}
+      </Text>
     </View>
   );
 };
@@ -32,7 +36,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     paddingRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
 
   listItemLast: {

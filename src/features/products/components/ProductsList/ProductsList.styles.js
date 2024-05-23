@@ -9,7 +9,6 @@ export default StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     width: '100%',
-    backgroundColor: '#fff',
     borderRadius: Platform.OS === 'ios' ? 12 : 0,
     overflow: 'hidden',
   },
@@ -42,12 +41,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
     height: 80,
-  },
-
-  lastItem: {
-    borderBottomWidth: 0,
-    borderBottomColor: 'transparent',
   },
 });
