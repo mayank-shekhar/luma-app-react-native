@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Pressable, Text, View, useColorScheme} from 'react-native';
+import {Text, View, useColorScheme} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -7,15 +7,12 @@ import {
 } from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   HomeScreen,
   SettingsScreen,
   LocationScreen,
-  ProductsScreen,
+  ProductsStackScreen,
 } from '../../../features';
-import {ProductDetails} from '../../../features/products/components';
 
 function PersonalisationScreen() {
   return (
@@ -32,58 +29,6 @@ type IconType = {
   color: string;
   size: number;
 };
-
-const ProductsStack = createNativeStackNavigator();
-export type HeaderButtonProps = {
-  /**
-   * Tint color for the header.
-   */
-  tintColor?: string;
-  /**
-   * Whether it's possible to navigate back in stack.
-   */
-  canGoBack: boolean;
-};
-
-function ProductsStackScreen() {
-  function getDetailsHeaderTitle(route: any) {
-    return route.params.product.name ?? 'Product Details';
-  }
-
-  function getDetailsPageHeaderOptions(route: any, props: HeaderButtonProps) {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: 20,
-        }}>
-        <Pressable>
-          <Icon name="heart-outline" size={30} color={props.tintColor} />
-        </Pressable>
-        <Pressable>
-          <MaterialIcon name="cart-plus" size={30} color={props.tintColor} />
-        </Pressable>
-        <Pressable>
-          <Icon name="card-outline" size={30} color={props.tintColor} />
-        </Pressable>
-      </View>
-    );
-  }
-
-  return (
-    <ProductsStack.Navigator>
-      <ProductsStack.Screen name="Products" component={ProductsScreen} />
-      <ProductsStack.Screen
-        name="Details"
-        component={ProductDetails}
-        options={({route}) => ({
-          headerTitle: getDetailsHeaderTitle(route),
-          headerRight: props => getDetailsPageHeaderOptions(route, props),
-        })}
-      />
-    </ProductsStack.Navigator>
-  );
-}
 
 export default function ApplicationNavigator() {
   const scheme = useColorScheme();

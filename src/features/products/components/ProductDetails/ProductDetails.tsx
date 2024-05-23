@@ -1,30 +1,81 @@
 import * as React from 'react';
 
-import {View, Text, SafeAreaView, Image, useColorScheme} from 'react-native';
+import {View, Text, Image, useColorScheme, ScrollView} from 'react-native';
 import {Product} from '../../../../models/Products';
-import {sanitizeProductCategory} from '../../../../utils/stringModifiers';
-// import { Image } from 'react-native-reanimated/lib/typescript/Animated';
+import {
+  sanitizeProductCategory,
+  numToTwoDecimals,
+} from '../../../../utils/stringModifiers';
+import {useTheme} from '@react-navigation/native';
+import ProductDetailsStyle from './ProductDetails.style';
 
-const ProductDetails = ({navigation, route}: any) => {
-  const isDarkMode = useColorScheme() === 'dark';
+const CURRENCY = '$';
+
+const ProductDetails = ({_navigation, route}: any) => {
+  const {colors} = useTheme();
+  const colorsScheme = useColorScheme();
+  const isDarkMode = colorsScheme === 'dark';
   const product = route.params.product as Product;
-  console.log('Product Details', product);
   return (
-    <SafeAreaView>
-      <View style={{backgroundColor: isDarkMode ? '#000' : '#fff'}}>
+    <ScrollView>
+      <View style={{backgroundColor: colors.card}}>
         {/* Product image */}
-        <View style={{backgroundColor: isDarkMode ? '#000' : '#fff'}}>
+        <View style={{backgroundColor: colors.background}}>
           <Image
-            style={{width: '100%', height: 550, resizeMode: 'contain'}}
+            style={ProductDetailsStyle.productImage}
             source={{uri: product.imageUrl}}
           />
         </View>
         {/* Product category and description */}
-        <View>
-          <Text>{sanitizeProductCategory(product.category)}</Text>
+        <View
+          style={[
+            ProductDetailsStyle.productInfo,
+            {backgroundColor: colors.card},
+          ]}>
+          <Text style={ProductDetailsStyle.categoryText}>
+            {sanitizeProductCategory(product.category)}
+          </Text>
+          <Text
+            style={[
+              ProductDetailsStyle.productDescription,
+              {color: colors.text},
+            ]}>
+            {product.description}
+          </Text>
+          <View style={ProductDetailsStyle.metaDataContainer}>
+            <View
+              style={[
+                ProductDetailsStyle.productColor,
+                {backgroundColor: product.color},
+              ]}
+            />
+            <View>
+              <Text
+                style={[
+                  ProductDetailsStyle.productPriceText,
+                  {color: colors.text},
+                ]}>
+                {CURRENCY}&nbsp;{numToTwoDecimals(product.price)}
+              </Text>
+            </View>
+
+            <View
+              style={[
+                ProductDetailsStyle.productSize,
+                {backgroundColor: isDarkMode ? '#fff' : '#000'},
+              ]}>
+              <Text
+                style={[
+                  ProductDetailsStyle.productSizeText,
+                  {color: isDarkMode ? '#000' : '#fff'},
+                ]}>
+                {product.size}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

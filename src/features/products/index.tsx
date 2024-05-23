@@ -1,59 +1,60 @@
-import {Platform, Text, View, ScrollView} from 'react-native';
-import * as React from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {View, Pressable} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {ProductsContainer} from './containers';
+import {ProductDetails} from './components';
 
-import productsCommonStyles from './products.common.styles';
-import {FeaturedProductsList, ProductsList} from './components';
-import {useEffect} from 'react';
-import {loadProducts} from '../../api';
-import {Products} from '../../models/Products.ts';
-import {FullScreenLoader} from '../../components/index.ts';
-import {useTheme} from '@react-navigation/native';
+const ProductsStack = createNativeStackNavigator();
+export type HeaderButtonProps = {
+  /**
+   * Tint color for the header.
+   */
+  tintColor?: string;
+  /**
+   * Whether it's possible to navigate back in stack.
+   */
+  canGoBack: boolean;
+};
 
-function ProductsScreen({navigation}: {navigation: any}) {
-  const {colors} = useTheme();
+function ProductsStackScreen() {
+  function getDetailsHeaderTitle(route: any) {
+    return route.params.product.name ?? 'Product Details';
+  }
 
-  const [products, setProducts] = React.useState<Products>([]);
-  const [loading, setLoading] = React.useState<boolean>(true);
-
-  const [featuredProducts, setFeaturedProducts] = React.useState<Products>([]);
-
-  const getProducts = async () => {
-    const fetchedProducts = await loadProducts();
-    setProducts(fetchedProducts.products);
-  };
-
-  useEffect(() => {
-    if (products.length > 0) {
-      setLoading(false);
-      const featured = products.filter(product => product.featured);
-      setFeaturedProducts(featured);
-    }
-  }, [products]);
-
-  useEffect(() => {
-    // Fetch products
-    getProducts();
-  }, []);
-
-  return loading ? (
-    <FullScreenLoader />
-  ) : (
-    <ScrollView>
-      <View style={productsCommonStyles.wrapper}>
-        {Platform.OS === 'ios' && (
-          <Text style={[productsCommonStyles.header, {color: colors.text}]}>
-            Products
-          </Text>
-        )}
-        {products.length > 0 && (
-          <>
-            <FeaturedProductsList products={featuredProducts} />
-            <ProductsList navigation={navigation} products={products} />
-          </>
-        )}
+  function getDetailsPageHeaderOptions(route: any, props: HeaderButtonProps) {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 20,
+        }}>
+        <Pressable>
+          <Icon name="heart-outline" size={30} color={props.tintColor} />
+        </Pressable>
+        <Pressable>
+          <Icon name="cart-outline" size={30} color={props.tintColor} />
+        </Pressable>
+        <Pressable>
+          <Icon name="card-outline" size={30} color={props.tintColor} />
+        </Pressable>
       </View>
-    </ScrollView>
+    );
+  }
+
+  return (
+    <ProductsStack.Navigator>
+      <ProductsStack.Screen name="Products" component={ProductsContainer} />
+      <ProductsStack.Screen
+        name="Details"
+        component={ProductDetails}
+        options={({route}) => ({
+          headerTitle: getDetailsHeaderTitle(route),
+          headerRight: props => getDetailsPageHeaderOptions(route, props),
+        })}
+      />
+    </ProductsStack.Navigator>
   );
 }
 
-export default ProductsScreen;
+export default ProductsStackScreen;
