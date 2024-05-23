@@ -1,17 +1,21 @@
 import * as React from 'react';
-import {Button, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {Pressable, Text, View, useColorScheme} from 'react-native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {HomeScreen, SettingsScreen, LocationScreen} from '../../../features';
-
-function ProductsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Products!</Text>
-    </View>
-  );
-}
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  HomeScreen,
+  SettingsScreen,
+  LocationScreen,
+  ProductsScreen,
+} from '../../../features';
+import {ProductDetails} from '../../../features/products/components';
 
 function PersonalisationScreen() {
   return (
@@ -29,9 +33,80 @@ type IconType = {
   size: number;
 };
 
+const ProductsStack = createNativeStackNavigator();
+export type HeaderButtonProps = {
+  /**
+   * Tint color for the header.
+   */
+  tintColor?: string;
+  /**
+   * Whether it's possible to navigate back in stack.
+   */
+  canGoBack: boolean;
+};
+
+function ProductsStackScreen() {
+  function getDetailsHeaderTitle(route: any) {
+    return route.params.product.name ?? 'Product Details';
+  }
+
+  function getDetailsPageHeaderOptions(route: any, props: HeaderButtonProps) {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 20,
+        }}>
+        <Pressable>
+          <Icon name="heart-outline" size={30} color={props.tintColor} />
+        </Pressable>
+        <Pressable>
+          <MaterialIcon name="cart-plus" size={30} color={props.tintColor} />
+        </Pressable>
+        <Pressable>
+          <Icon name="card-outline" size={30} color={props.tintColor} />
+        </Pressable>
+      </View>
+    );
+  }
+
+  return (
+    <ProductsStack.Navigator>
+      <ProductsStack.Screen name="Products" component={ProductsScreen} />
+      <ProductsStack.Screen
+        name="Details"
+        component={ProductDetails}
+        options={({route}) => ({
+          headerTitle: getDetailsHeaderTitle(route),
+          headerRight: props => getDetailsPageHeaderOptions(route, props),
+        })}
+      />
+    </ProductsStack.Navigator>
+  );
+}
+
 export default function ApplicationNavigator() {
-  const getHomeHeaderRight = () => {
-    return <Button title="User" />;
+  const scheme = useColorScheme();
+
+  const getHomeHeaderRight = (props: {
+    tintColor?: string;
+    pressColor?: string;
+    pressOpacity?: number;
+  }) => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          // height: 30,
+          marginHorizontal: 20,
+          marginTop: 10,
+          // marginBottom: 30,
+        }}>
+        <Icon name="person" size={30} color={props.tintColor} />
+      </View>
+    );
   };
 
   const getTabBarIcon = (
@@ -58,7 +133,7 @@ export default function ApplicationNavigator() {
       case 'personalisation':
         return (
           <Icon
-            name={props.focused ? 'person' : 'person-outline'}
+            name={props.focused ? 'disc' : 'disc-outline'}
             color={props.color}
             size={props.size}
           />
@@ -74,7 +149,7 @@ export default function ApplicationNavigator() {
       case 'settings':
         return (
           <Icon
-            name={props.focused ? 'settings' : 'settings-outline'}
+            name={props.focused ? 'cog' : 'cog-outline'}
             color={props.color}
             size={props.size}
           />
@@ -90,21 +165,25 @@ export default function ApplicationNavigator() {
   };
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
+    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen
           name="Home"
           component={HomeScreen}
           options={{
             headerRight: getHomeHeaderRight,
             tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
+            // headerTransparent: true,
+            // headerTitleStyle: {display: 'none'},
           }}
         />
         <Tab.Screen
-          name="Products"
-          component={ProductsScreen}
+          name="Products list"
+          component={ProductsStackScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
+            // headerTransparent: true,
+            // headerTitleStyle: {display: 'none'},
           }}
         />
         <Tab.Screen
