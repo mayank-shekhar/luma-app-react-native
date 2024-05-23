@@ -1,13 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
 
-const shadow = {
-  shadowColor: '#000',
-  shadowOffset: {width: 0, height: 2},
-  shadowOpacity: 0.9,
-  shadowRadius: 3.84,
-  elevation: 5,
-};
-
 export default StyleSheet.create({
   wrapper: {
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 0,
@@ -25,10 +17,9 @@ export default StyleSheet.create({
   },
 
   subheader: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#999',
     fontWeight: '500',
-    // marginBottom: 10,
     textTransform: 'uppercase',
   },
 
@@ -45,39 +36,4 @@ export default StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
-
-  //
-  // heroSection: {
-  //   backgroundColor: '#fff',
-  //   borderRadius: 20,
-  //   padding: 10,
-  //   flexDirection: 'column',
-  //   justifyContent: 'flex-start',
-  // },
-  //
-  // heroImageContainer: {
-  //   alignItems: 'center',
-  // },
-  //
-  // heroImage: {
-  //   resizeMode: 'contain',
-  //   width: '80%',
-  // },
-  //
-  // heroText: {
-  //   fontSize: 14,
-  //   color: '#000',
-  //   marginTop: 5,
-  // },
-  //
-  // brandName: {
-  //   fontSize: 15,
-  //   fontWeight: 'bold',
-  //   marginTop: 5,
-  // },
-  //
-  // heroTextWrapper: {
-  //   alignItems: 'center',
-  //   marginBottom: 20,
-  // },
 });

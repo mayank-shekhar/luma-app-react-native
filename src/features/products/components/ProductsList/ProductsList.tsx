@@ -35,7 +35,14 @@ export default function ProductsList({
   };
   const renderItem = ({item, isLast}: {item: Product; isLast: boolean}) => {
     return (
-      <Pressable key={item.sku} onPress={() => onViewDetails(item)}>
+      <Pressable
+        key={item.sku}
+        onPress={() => onViewDetails(item)}
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? colors.border : colors.card,
+          },
+        ]}>
         <View style={ProductsListStyles.productsListItem} key={item.sku}>
           <View style={ProductsListStyles.productImageContainer}>
             <Image
@@ -48,13 +55,21 @@ export default function ProductsList({
               ProductsListStyles.productInfo,
               {borderBottomWidth: isLast ? 0 : 1, borderColor: colors.border},
             ]}>
-            <View style={ProductsListStyles.productTitle}>
+            <View>
               <Text numberOfLines={1} style={{color: colors.text}}>
                 {item.name}
               </Text>
             </View>
             <View style={ProductsListStyles.arrow}>
               {/* <Button title="View details" onPress={() => onViewDetails(item)}> */}
+              {item.featured && (
+                <Icon
+                  name="star"
+                  size={20}
+                  color={colors.text}
+                  style={{marginRight: 5}}
+                />
+              )}
               <Icon name="chevron-forward" size={20} color="#999" />
             </View>
           </View>

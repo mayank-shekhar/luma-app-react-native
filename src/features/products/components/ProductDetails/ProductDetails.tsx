@@ -8,6 +8,7 @@ import {
 } from '../../../../utils/stringModifiers';
 import {useTheme} from '@react-navigation/native';
 import ProductDetailsStyle from './ProductDetails.style';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const CURRENCY = '$';
 
@@ -32,9 +33,15 @@ const ProductDetails = ({_navigation, route}: any) => {
             ProductDetailsStyle.productInfo,
             {backgroundColor: colors.card},
           ]}>
-          <Text style={ProductDetailsStyle.categoryText}>
-            {sanitizeProductCategory(product.category)}
-          </Text>
+          <View style={ProductDetailsStyle.categoryTextWrapper}>
+            <Text style={ProductDetailsStyle.categoryText}>
+              {sanitizeProductCategory(product.category)}
+            </Text>
+            {product.featured && (
+              <Icon name="star" size={16} color={colors.text} />
+            )}
+          </View>
+
           <Text
             style={[
               ProductDetailsStyle.productDescription,

@@ -43,4 +43,9 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     height: 80,
   },
+  arrow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
 });

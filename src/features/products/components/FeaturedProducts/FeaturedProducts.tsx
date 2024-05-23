@@ -1,20 +1,25 @@
 import * as React from 'react';
-import {Image, ScrollView, Text, View} from 'react-native';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import featuredProductsStyles from './FeaturedProducts.styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import productsCommonStyles from '../../products.common.styles';
-import {Products} from '../../../../models/Products.ts';
+import {Product, Products} from '../../../../models/Products';
 import {useTheme} from '@react-navigation/native';
 
 export type FeaturedProductsListProps = {
   products: Products;
+  navigation: any;
 };
 
 export default function FeaturedProductsList(
   props: FeaturedProductsListProps,
 ): React.JSX.Element {
   const {colors} = useTheme();
-  const {products} = props;
+  const {products, navigation} = props;
+
+  const onViewDetails = (product: Product) => {
+    navigation.navigate('Details', {product});
+  };
   return (
     <View
       style={[
@@ -39,23 +44,34 @@ export default function FeaturedProductsList(
           {/* Featured products */}
           {products.map(product => {
             return (
-              <View style={featuredProductsStyles.product} key={product.sku}>
-                <View
-                  style={[
-                    featuredProductsStyles.productImage,
-                    {borderColor: colors.border},
-                  ]}>
-                  <Image
-                    source={{uri: product.imageUrl}}
-                    style={{width: 100, height: 100}}
-                  />
+              <Pressable
+                key={product.sku}
+                onPress={() => onViewDetails(product)}
+                style={({pressed}) => [
+                  {
+                    backgroundColor: pressed ? colors.border : colors.card,
+                  },
+                ]}>
+                <View style={featuredProductsStyles.product} key={product.sku}>
+                  <View
+                    style={[
+                      featuredProductsStyles.productImage,
+                      {borderColor: colors.border},
+                    ]}>
+                    <Image
+                      source={{uri: product.imageUrl}}
+                      style={{width: 100, height: 100}}
+                    />
+                  </View>
+                  <View style={featuredProductsStyles.productTitle}>
+                    <Text
+                      numberOfLines={1}
+                      style={{fontSize: 12, color: colors.primary}}>
+                      {product.name}
+                    </Text>
+                  </View>
                 </View>
-                <View style={featuredProductsStyles.productTitle}>
-                  <Text numberOfLines={1} style={{color: colors.primary}}>
-                    {product.name}
-                  </Text>
-                </View>
-              </View>
+              </Pressable>
             );
           })}
         </ScrollView>

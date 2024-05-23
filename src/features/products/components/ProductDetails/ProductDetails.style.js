@@ -9,6 +9,13 @@ export default StyleSheet.create({
   productInfo: {
     padding: 20,
   },
+  categoryTextWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    alignContent: 'center',
+  },
+
   categoryText: {color: '#999', fontWeight: '500'},
   productDescription: {fontSize: 18, marginTop: 10},
   metaDataContainer: {

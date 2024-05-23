@@ -47,7 +47,10 @@ function ProductsContainer({navigation}: {navigation: any}) {
         )}
         {products.length > 0 && (
           <>
-            <FeaturedProductsList products={featuredProducts} />
+            <FeaturedProductsList
+              navigation={navigation}
+              products={featuredProducts}
+            />
             <ProductsList navigation={navigation} products={products} />
           </>
         )}
