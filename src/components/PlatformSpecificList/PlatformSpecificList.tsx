@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Platform, View, FlatList, SafeAreaView} from 'react-native';
+import {Platform, View, FlatList} from 'react-native';
 import PlatformSpecificListStyles from './PlatformSpecificList.styles';
 
 export type PlatformSpecificListProps<T> = {

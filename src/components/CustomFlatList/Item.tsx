@@ -6,25 +6,8 @@ export type DataItemType = {
   id: string;
   title: string;
   description: string;
-  isLast: boolean;
+  isLast?: boolean;
   [x: string]: any;
-};
-
-const Item: React.FC<DataItemType> = props => {
-  const {colors} = useTheme();
-  const {title, description, isLast} = props;
-  let itemStyle = styles.listItem;
-  if (isLast) {
-    itemStyle = styles.listItemLast;
-  }
-  return (
-    <View style={[itemStyle, {borderColor: colors.border}]}>
-      <Text style={[styles.identityName, {color: colors.text}]}>{title}:</Text>
-      <Text style={[styles.identityDescription, {color: colors.text}]}>
-        {description}
-      </Text>
-    </View>
-  );
 };
 
 const styles = StyleSheet.create({
@@ -47,7 +30,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   name: {
-    fontSize: 16,
+    fontSize: 14,
   },
 
   description: {
@@ -55,5 +38,22 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+const Item: React.FC<DataItemType> = props => {
+  const {colors} = useTheme();
+  const {title, description, isLast} = props;
+  let itemStyle = styles.listItem;
+  if (isLast) {
+    itemStyle = styles.listItemLast;
+  }
+  return (
+    <View style={[itemStyle, {borderColor: colors.border}]}>
+      <Text style={[styles.name, {color: colors.text}]}>{title}:</Text>
+      <Text style={[styles.description, {color: colors.text}]}>
+        {description}
+      </Text>
+    </View>
+  );
+};
 
 export default Item;

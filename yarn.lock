@@ -2,6 +2,66 @@
 # yarn lockfile v1
 
 
+"@adobe/react-native-aepassurance@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepassurance/-/react-native-aepassurance-6.0.1.tgz#09c7bf2597fd22e557264d23b2644e3057decf63"
+  integrity sha512-Lsl5By1x1tSi3SdombFSca0veT9emXSPb+Gkjz+6flcNc8Yvb8PVn4pd5yH5+2OpkDur8zxQD3ItNN91BlglPQ==
+
+"@adobe/react-native-aepcampaignclassic@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepcampaignclassic/-/react-native-aepcampaignclassic-6.0.1.tgz#2464a0e5b65123726592e14f85c3a2733b5df031"
+  integrity sha512-mRNEgtXDsAs6DS9agl0xdeXRClQZwgpww8pdrCkXEulKI8sbQGDKoXtfpJW50RHPiPj6QJWanSIkr0szmthuEg==
+
+"@adobe/react-native-aepcore@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepcore/-/react-native-aepcore-6.0.1.tgz#1fd98a4bd550143ad0ae71346bf4b99dd6bd7a87"
+  integrity sha512-59A/HoDu+QW0cYzvIJAC3/xJHgNavkqCnrXM68bh7OwtG2blN9cV37eXjvuQgYAmfhzaxrDU4hs4A50YRvjE6Q==
+
+"@adobe/react-native-aepedge@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepedge/-/react-native-aepedge-6.0.1.tgz#09eb2c2a26478aee342ddc52f9e035c5050a27d1"
+  integrity sha512-MSUAL2oCZ07NY00M5KS4fdQwfqqInJwO7Og2x4xeVzxAIrKtDje1uX2Z7VGx0Vh7Ze1eiuOr9OtLVl2uFM07gQ==
+
+"@adobe/react-native-aepedgebridge@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepedgebridge/-/react-native-aepedgebridge-6.0.1.tgz#b2ada71037a32334c96940bf7e4eaa296b513ada"
+  integrity sha512-GHEIkXfDqZLDj+q1uXL+pgNAhW1ScjYqwxExFSVvZ/ks68E0yiCTErrR1sI/k4OE7Er1KYwX0ldyfyLsUP7izg==
+
+"@adobe/react-native-aepedgeconsent@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepedgeconsent/-/react-native-aepedgeconsent-6.0.1.tgz#fa1dd681b37ab201bbf2f86709bef498bd1552aa"
+  integrity sha512-ROG/oVvapNFTtvu1AwSX7wahFRlT6nRDZ+r/QFIS/ekKVxqMGhccqVcAYgwUiYbXRlVIybBzx4Wtay0iYj70Dg==
+
+"@adobe/react-native-aepedgeidentity@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepedgeidentity/-/react-native-aepedgeidentity-6.0.1.tgz#63fa0b474acea7db6eeb0e265c27c1f8d08e1fcd"
+  integrity sha512-mocI03mnpgN6NMijZLncahIuK2NoVLroqmjMoeOdrkgW4BKXzJNmBS3JiaQKmSwLHxog7TLFay/g/5QwGgIkxw==
+
+"@adobe/react-native-aepmessaging@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepmessaging/-/react-native-aepmessaging-6.0.1.tgz#2560ce8ddcb7bec166519cd8364086019ffbf627"
+  integrity sha512-7+pll8Bs6BIzEBKpLYuq3jWnOZL/gAor4IBsV/hg0J+po4Hl6NdZm3xHc3pcGBkOcNMRsZ5qhyTRLa0XahFnOQ==
+
+"@adobe/react-native-aepoptimize@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepoptimize/-/react-native-aepoptimize-6.0.1.tgz#5fa919337bb113aab1012c9fc1999c663223e0c4"
+  integrity sha512-CXp5FRTF3pFFSeT5HLw3Iw0ftADE8f/yJmf/haDGqQDc1GaGbhAizQJiejCKw8K7efuSw9NI2j/BrHqAJqHpyA==
+
+"@adobe/react-native-aepplaces@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepplaces/-/react-native-aepplaces-6.0.1.tgz#78f1e645479cfe660dd58f294489148ca0aa6334"
+  integrity sha512-jhUwzOta41BurZfm6wuYUKt6OYruaMzO5xIeZy+1yKyaIAP/jRTIb6sFYYOSXlG7OXv9aLOoV0NiLnaI31AiFQ==
+
+"@adobe/react-native-aeptarget@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aeptarget/-/react-native-aeptarget-6.0.1.tgz#7528cbf2560acb43cb0fbedceef2daba090d03d3"
+  integrity sha512-HeUQVXEDeW0tFp6VElH0i/kRdRZmVPXbUdKupD2M5qABswN8mgtWQUCqPHpPDg6Ho3ZJN/o1ayK9TFOy1Qyz3g==
+
+"@adobe/react-native-aepuserprofile@^6.0.1":
+  version "6.0.1"
+  resolved "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-adobe-platform-release/@adobe/react-native-aepuserprofile/-/react-native-aepuserprofile-6.0.1.tgz#03958aca9a734a12e4cd41516560fc0997a6ae53"
+  integrity sha512-Gy7clxE5UK9/val+2bCxKihTQpruu/alacJKSuFM8d6PKRTyRfC6aL3Xqn2oczi0CwP15oly/emsdPPyZ9VYHQ==
+
 "@ampproject/remapping@^2.2.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.3.0.tgz#ed441b6fa600072520ce18b43d2c8cc8caecc7f4"
