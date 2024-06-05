@@ -5,11 +5,8 @@ import {MobileCore} from '@adobe/react-native-aepcore';
 import {ApplicationNavigator} from './navigation/containers';
 import {StateProvider} from './providers';
 import appReducer, {InitialAppState} from './reducers/reducer';
-// import {useDispatch} from './hooks';
-// import {ActionTypes} from './reducers/actions';
 
 function App() {
-  // const dispatch = useDispatch();
   useEffect(() => {
     console.log('AdobeExperienceSDK: Initializing SDK');
     MobileCore.getLogLevel().then(level =>

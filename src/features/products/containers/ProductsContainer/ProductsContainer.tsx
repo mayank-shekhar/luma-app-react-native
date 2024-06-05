@@ -7,11 +7,12 @@ import {useEffect} from 'react';
 import {loadProducts} from '../../../../api';
 import {Products} from '../../../../models/Products.ts';
 import {FullScreenLoader} from '../../../../components/index.ts';
-import {useTheme} from '@react-navigation/native';
+// import {useTheme} from '@react-navigation/native';
 import {useMobileSDK} from '../../../../hooks/useAppStore.ts';
+import {useFocusEffect} from '@react-navigation/native';
 
 function ProductsContainer({navigation}: {navigation: any}) {
-  const {colors} = useTheme();
+  // const {colors} = useTheme();
 
   const [products, setProducts] = React.useState<Products>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -32,14 +33,17 @@ function ProductsContainer({navigation}: {navigation: any}) {
     }
   }, [products]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      mobileSDK.sendTrackScreenEvent(
+        `rn luma: content: ${Platform.OS}: us: en: products`,
+      );
+    }, []),
+  );
+
   useEffect(() => {
     // Fetch products
     getProducts();
-
-    // sdk events
-    mobileSDK.sendTrackScreenEvent(
-      `rn luma: content: ${Platform.OS}: us: en: products`,
-    );
   }, []);
 
   return loading ? (

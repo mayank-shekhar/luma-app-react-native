@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Pressable, SafeAreaView, Platform} from 'react-native';
+import {View, Pressable, Platform} from 'react-native';
 import ApplicationHero from './components/ApplicationHero/ApplicationHero';
 import IdentitiesList from './components/Identities/Identities';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -7,16 +7,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {useMobileSDK} from '../../hooks';
 import LoginSheet from './components/LoginSheet/LoginSheet';
 import {HeaderButtonProps} from '../../types';
+import {useFocusEffect} from '@react-navigation/native';
 
 function HomeScreen() {
   const mobileSDK = useMobileSDK();
+  useFocusEffect(
+    React.useCallback(() => {
+      mobileSDK.getConsents();
+      mobileSDK.sendTrackScreenEvent(
+        `rn luma: content: ${Platform.OS}: us: en: home`,
+      );
+    }, []),
+  );
 
-  React.useEffect(() => {
-    mobileSDK.getConsents();
-    mobileSDK.sendTrackScreenEvent(
-      `rn luma: content: ${Platform.OS}: us: en: home`,
-    );
-  }, []);
+  // React.useEffect(() => {
+
+  // }, []);
   return (
     <View style={{flex: 1, flexDirection: 'column', marginTop: 20}}>
       <ApplicationHero />

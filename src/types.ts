@@ -8,3 +8,10 @@ export type HeaderButtonProps = {
    */
   canGoBack: boolean;
 };
+
+export type PermissionStatus =
+  | 'unavailable'
+  | 'denied'
+  | 'limited'
+  | 'granted'
+  | 'blocked';

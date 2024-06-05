@@ -9,13 +9,22 @@ import {
   IdentityItem,
   AuthenticatedState,
 } from '@adobe/react-native-aepedgeidentity';
+import {Product} from '../models/Products';
+
+import {Configuration} from '../models/Configuration';
 
 export class MobileSDK {
   private state: AppplicationStateType;
   private dispatch: any;
-  constructor(state: AppplicationStateType, dispatch: any) {
+  private configuration: Configuration;
+  constructor(
+    state: AppplicationStateType,
+    dispatch: any,
+    configuration: Configuration,
+  ) {
     this.state = state;
     this.dispatch = dispatch;
+    this.configuration = configuration;
   }
 
   /**
@@ -28,7 +37,7 @@ export class MobileSDK {
 
     const xdmData: Record<string, any> = {
       eventType: 'application.scene',
-      tenant: {
+      [this.configuration.config.tenant]: {
         appInformation: {
           appStateDetails: {
             screenType: 'App',
@@ -135,7 +144,7 @@ export class MobileSDK {
     console.log(`App interaction event: ${actionName}`);
     const xdmData: Record<string, any> = {
       eventType: 'application.interaction',
-      tenant: {
+      [this.configuration.config.tenant]: {
         appInformation: {
           appInteraction: {
             name: actionName,
@@ -170,5 +179,36 @@ export class MobileSDK {
     } catch (error) {
       return Promise.reject(error);
     }
+  }
+
+  public sendCommerceExperienceEvent(
+    commerceEventType: string,
+    product: Product,
+  ) {
+    // implementation
+    console.log(`Commerce experience event: ${commerceEventType}`);
+    const xdmData: Record<string, any> = {
+      eventType: `commerce.${commerceEventType}`,
+      commerce: {
+        [commerceEventType]: {
+          value: 1,
+        },
+      },
+      productListItems: {
+        [product.sku]: {
+          SKU: product.sku,
+          name: product.name,
+          priceTotal: product.price,
+          productCategory: product.category,
+          productColor: product.color,
+          productSize: product.size,
+          productURL: product.url,
+          productStockQuantity: product.stockQuantity,
+          productImageURL: product.imageUrl,
+        },
+      },
+    };
+    const commerceExperienceEvent = new ExperienceEvent({xdmData: xdmData});
+    Edge.sendEvent(commerceExperienceEvent);
   }
 }

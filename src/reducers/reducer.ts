@@ -3,6 +3,7 @@ import {ActionTypes} from './actions';
 
 export const InitialAppState: AppplicationStateType = {
   isReady: false,
+  appTrackingTransparencyStatus: 'unavailable',
   home: {
     userProfile: {
       isPaidUser: false,
@@ -52,6 +53,11 @@ function appReducer(
             crmId: action.payload,
           },
         },
+      };
+    case ActionTypes.SET_APP_TRACKING_TRANSPARENCY_STATUS:
+      return {
+        ...state,
+        appTrackingTransparencyStatus: action.payload,
       };
     default:
       return state;

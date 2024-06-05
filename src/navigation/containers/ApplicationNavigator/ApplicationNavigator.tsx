@@ -14,6 +14,10 @@ import {
   ProductsStackScreen,
 } from '../../../features';
 
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {useDispatch} from '../../../hooks';
+import {setAppTrackingTransparencyStatus} from '../../../reducers/actions';
+
 function PersonalisationScreen() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -32,6 +36,22 @@ type IconType = {
 
 export default function ApplicationNavigator() {
   const scheme = useColorScheme();
+  const dispatch = useDispatch();
+
+  const requestAppTrackingPermission = async () => {
+    check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      if (result !== RESULTS.GRANTED) {
+        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(status => {
+          console.log('ATT:', status);
+          dispatch(setAppTrackingTransparencyStatus(status));
+        });
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    requestAppTrackingPermission();
+  }, []);
 
   const getTabBarIcon = (
     tabName: string,

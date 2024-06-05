@@ -3,11 +3,14 @@ import {AppState} from 'react-native';
 import {ActionType} from '../../reducers/actions';
 import {InitialAppState} from '../../reducers/reducer';
 import {MobileSDK} from '../../utils/MobileSDK';
+import {loadConfiguration} from '../../api/configuration';
+import {Configuration} from '../../models/Configuration';
 
 export type AppplicationStateType = {
   isReady: boolean;
   isOptedOut?: boolean;
   isPushEnabled?: boolean;
+  appTrackingTransparencyStatus?: string;
 
   // home screen state
   home: {
@@ -47,9 +50,24 @@ export type StateProviderProps = {
 };
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
+  const [config, setConfig] = React.useState<Configuration | null>(null);
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  const MobileSDKInstance = new MobileSDK(state, dispatch);
-  return (
+
+  const fetchConfiguration = async () => {
+    // Fetch configuration
+    return await loadConfiguration();
+  };
+
+  React.useEffect(() => {
+    // Load configuration
+    fetchConfiguration().then(configuration => {
+      setConfig(configuration);
+    });
+  }, []);
+  const MobileSDKInstance = React.useMemo(() => {
+    return new MobileSDK(state, dispatch, config as Configuration);
+  }, [state, dispatch, config]);
+  return config ? (
     <StateContext.Provider
       value={{
         state,
@@ -58,7 +76,7 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
       }}>
       {children}
     </StateContext.Provider>
-  );
+  ) : null;
 }
 
 export default StateProvider;

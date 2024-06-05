@@ -10,6 +10,7 @@ export const ActionTypes = {
   SET_ECID: 'SET_ECID',
   SET_EMAIL: 'SET_EMAIL',
   SET_CRID: 'SET_CRID',
+  SET_APP_TRACKING_TRANSPARENCY_STATUS: 'SET_APP_TRACKING_TRANSPARENCY_STATUS',
 };
 
 export function setEcid(ecid: string): ActionType {
@@ -31,5 +32,12 @@ export function setCrid(crid: string): ActionType {
   return {
     type: ActionTypes.SET_CRID,
     payload: crid,
+  };
+}
+
+export function setAppTrackingTransparencyStatus(status: string): ActionType {
+  return {
+    type: ActionTypes.SET_APP_TRACKING_TRANSPARENCY_STATUS,
+    payload: status,
   };
 }
