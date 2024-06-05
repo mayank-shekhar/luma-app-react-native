@@ -4,7 +4,7 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 20,
-    marginTop: 50,
+    marginTop: 100,
   },
 
   header: {

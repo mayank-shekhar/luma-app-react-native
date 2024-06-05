@@ -54,7 +54,7 @@ class MainApplication : Application(), ReactApplication {
     // SDK
     MobileCore.setApplication(this)
     MobileCore.setLogLevel(LoggingMode.DEBUG)
-    MobileCore.configureWithAppID("b5cbd1a1220e/1857ef6cacb5/launch-2594f26b23cd-development")
+    MobileCore.configureWithAppID("3149c49c3910/7f6d22873d0d/launch-62375a272e8b-development")
 
     val extensions = Arrays.asList(
       Assurance.EXTENSION,
@@ -69,7 +69,6 @@ class MainApplication : Application(), ReactApplication {
     MobileCore.registerExtensions(extensions) { o: Any? ->
       MobileCore.lifecycleStart(null)
       Log.d("AEP SDK", "Initialized AEP SDK")
-//      Log.DEBUG
     }
 
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {

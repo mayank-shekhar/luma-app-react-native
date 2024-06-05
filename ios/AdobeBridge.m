@@ -22,6 +22,8 @@
 
 // Environment file id / App id
 //static NSString* const EnvironmentId = @"94f571f308d5/9f2af394457b/launch-93ae8288aa66-staging";
+// working env file id:@"b5cbd1a1220e/1857ef6cacb5/launch-2594f26b23cd-development"
+static NSString* const EnvironmentId = @"3149c49c3910/7f6d22873d0d/launch-62375a272e8b-development";
 
 @implementation AdobeBridge
 
@@ -30,7 +32,7 @@
   const UIApplicationState appState = application.applicationState;
   
   [AEPMobileCore setLogLevel:AEPLogLevelDebug];
-  [AEPMobileCore configureWithAppId:@"b5cbd1a1220e/1857ef6cacb5/launch-2594f26b23cd-development"];
+  [AEPMobileCore configureWithAppId:EnvironmentId];
   [AEPMobileCore
         registerExtensions:@[
           AEPMobileEdgeIdentity.class,
@@ -39,7 +41,11 @@
           AEPMobileOptimize.class,
           AEPMobileLifecycle.class,
           AEPMobileAssurance.class,
-          AEPMobileIdentity.class
+          AEPMobileIdentity.class,
+          AEPMobileUserProfile.class,
+          AEPMobileSignal.class,
+          AEPMessageSettings.class,
+          AEPMobileEdgeIdentity.class,
         ]
     completion:^{
     // only start lifecycle if the application is not in the background

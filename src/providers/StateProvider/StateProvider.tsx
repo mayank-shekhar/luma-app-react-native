@@ -2,6 +2,7 @@ import * as React from 'react';
 import {AppState} from 'react-native';
 import {ActionType} from '../../reducers/actions';
 import {InitialAppState} from '../../reducers/reducer';
+import {MobileSDK} from '../../utils/MobileSDK';
 
 export type AppplicationStateType = {
   isReady: boolean;
@@ -10,6 +11,9 @@ export type AppplicationStateType = {
 
   // home screen state
   home: {
+    userProfile: {
+      isPaidUser: boolean;
+    };
     identities: {
       ecid: string;
       email: string;
@@ -24,11 +28,13 @@ export type AppplicationStateType = {
 export type StateContextType = {
   state: AppplicationStateType;
   dispatch: React.Dispatch<ActionType>;
+  mobileSDK: MobileSDK;
 };
 
 export const StateContext = React.createContext<StateContextType>({
   state: InitialAppState,
   dispatch: null as any,
+  mobileSDK: null as any,
 });
 
 export type StateProviderProps = {
@@ -42,11 +48,13 @@ export type StateProviderProps = {
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  const MobileSDKInstance = new MobileSDK(state, dispatch);
   return (
     <StateContext.Provider
       value={{
         state,
         dispatch,
+        mobileSDK: MobileSDKInstance,
       }}>
       {children}
     </StateContext.Provider>

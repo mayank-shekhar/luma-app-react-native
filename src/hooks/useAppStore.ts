@@ -24,3 +24,11 @@ export function useAppState() {
   }
   return state;
 }
+
+export function useMobileSDK() {
+  const {mobileSDK} = React.useContext(StateContext);
+  if (mobileSDK === null) {
+    throw new Error('useMobileSDK must be used within a StateProvider');
+  }
+  return mobileSDK;
+}

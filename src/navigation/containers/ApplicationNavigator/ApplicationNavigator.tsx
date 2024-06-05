@@ -33,27 +33,6 @@ type IconType = {
 export default function ApplicationNavigator() {
   const scheme = useColorScheme();
 
-  const getHomeHeaderRight = (props: {
-    tintColor?: string;
-    pressColor?: string;
-    pressOpacity?: number;
-  }) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          // height: 30,
-          marginHorizontal: 20,
-          marginTop: 10,
-          // marginBottom: 30,
-        }}>
-        <Icon name="person" size={30} color={props.tintColor} />
-      </View>
-    );
-  };
-
   const getTabBarIcon = (
     tabName: string,
     props: IconType,
@@ -111,15 +90,14 @@ export default function ApplicationNavigator() {
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator>
         <Tab.Screen
           name="Home"
           component={HomeScreen}
           options={{
-            headerRight: getHomeHeaderRight,
             tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
-            // headerTransparent: true,
-            // headerTitleStyle: {display: 'none'},
+            headerTransparent: true,
+            headerTitleStyle: {display: 'none'},
           }}
         />
         <Tab.Screen
@@ -127,8 +105,8 @@ export default function ApplicationNavigator() {
           component={ProductsStackScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
-            // headerTransparent: true,
-            // headerTitleStyle: {display: 'none'},
+            headerTransparent: true,
+            headerTitleStyle: {display: 'none'},
           }}
         />
         <Tab.Screen
