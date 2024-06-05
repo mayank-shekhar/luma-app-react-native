@@ -6,13 +6,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useMobileSDK} from '../../hooks';
 import LoginSheet from './components/LoginSheet/LoginSheet';
+import {HeaderButtonProps} from '../../types';
 
-function HomeScreen({navigation}: {navigation: any}) {
+function HomeScreen() {
   const mobileSDK = useMobileSDK();
-  const onLoginIconPress = () => {
-    console.log('Login icon pressed');
-    navigation.navigate('LoginModal');
-  };
+
   React.useEffect(() => {
     mobileSDK.getConsents();
     mobileSDK.sendTrackScreenEvent(
@@ -20,16 +18,7 @@ function HomeScreen({navigation}: {navigation: any}) {
     );
   }, []);
   return (
-    <View style={{flex: 1, flexDirection: 'column', marginTop: 0}}>
-      <SafeAreaView>
-        <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
-          <View style={{paddingHorizontal: 15, paddingVertical: 5}}>
-            <Pressable onPress={onLoginIconPress}>
-              <Icon name="person-outline" size={30} />
-            </Pressable>
-          </View>
-        </View>
-      </SafeAreaView>
+    <View style={{flex: 1, flexDirection: 'column', marginTop: 20}}>
       <ApplicationHero />
       <IdentitiesList />
     </View>
@@ -49,20 +38,31 @@ function RootHomeScreen() {
       </Pressable>
     );
   };
+
+  const getHomePageHeaderRight = (
+    props: HeaderButtonProps,
+    navigation: any,
+  ) => {
+    const onLoginIconPress = () => {
+      console.log('Login icon pressed');
+      navigation.navigation.navigate('LoginModal');
+    };
+    return (
+      <View style={{flexDirection: 'column', alignItems: 'flex-end'}}>
+        <Pressable onPress={onLoginIconPress}>
+          <Icon name="person-outline" color={props.tintColor} size={24} />
+        </Pressable>
+      </View>
+    );
+  };
   return (
     <RootStack.Navigator>
       <RootStack.Screen
-        name="Homepage"
+        name="Home"
         component={HomeScreen}
-        options={_navigation => ({
+        options={navigation => ({
           headerShown: true,
-          headerTransparent: false,
-          headerTitle: '',
-          headerShadowVisible: false,
-          headerStyle: {
-            height: 10,
-            backgroundColor: 'transparent',
-          },
+          headerRight: props => getHomePageHeaderRight(props, navigation),
         })}
       />
       <RootStack.Group screenOptions={{presentation: 'modal'}}>
