@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
 
   sectionWrapper: {
-    marginTop: 20,
+    marginTop: 0,
   },
 
   header: {

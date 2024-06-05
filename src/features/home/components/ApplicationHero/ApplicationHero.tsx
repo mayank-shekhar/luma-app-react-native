@@ -8,7 +8,7 @@ function ApplicationHero() {
   const {colors} = useTheme();
   return (
     <View style={styles.wrapper}>
-      <Text style={[styles.header, {color: colors.text}]}>Home</Text>
+      {/* <Text style={[styles.header, {color: colors.text}]}>Home</Text> */}
       <View style={[styles.heroSection, {backgroundColor: colors.card}]}>
         <View style={styles.heroImageContainer}>
           <Image

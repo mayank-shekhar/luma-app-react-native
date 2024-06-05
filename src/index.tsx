@@ -1,9 +1,28 @@
-import React from 'react';
-
+import React, {useEffect} from 'react';
+import 'react-native-get-random-values';
+import {MobileCore} from '@adobe/react-native-aepcore';
+// import {UserProfile} from '@adobe/react-native-aepuserprofile';
 import {ApplicationNavigator} from './navigation/containers';
+import {StateProvider} from './providers';
+import appReducer, {InitialAppState} from './reducers/reducer';
 
 function App() {
+  useEffect(() => {
+    console.log('AdobeExperienceSDK: Initializing SDK');
+    MobileCore.getLogLevel().then(level =>
+      console.log('AdobeExperienceSDK: Log Level = ' + level),
+    );
+  }, []);
+
   return <ApplicationNavigator />;
 }
 
-export default App;
+function ApplicationWithProviders() {
+  return (
+    <StateProvider reducer={appReducer} initialState={InitialAppState}>
+      <App />
+    </StateProvider>
+  );
+}
+
+export default ApplicationWithProviders;

@@ -7,13 +7,16 @@ import {useEffect} from 'react';
 import {loadProducts} from '../../../../api';
 import {Products} from '../../../../models/Products.ts';
 import {FullScreenLoader} from '../../../../components/index.ts';
-import {useTheme} from '@react-navigation/native';
+// import {useTheme} from '@react-navigation/native';
+import {useMobileSDK} from '../../../../hooks/useAppStore.ts';
+import {useFocusEffect} from '@react-navigation/native';
 
 function ProductsContainer({navigation}: {navigation: any}) {
-  const {colors} = useTheme();
+  // const {colors} = useTheme();
 
   const [products, setProducts] = React.useState<Products>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
+  const mobileSDK = useMobileSDK();
 
   const [featuredProducts, setFeaturedProducts] = React.useState<Products>([]);
 
@@ -30,6 +33,14 @@ function ProductsContainer({navigation}: {navigation: any}) {
     }
   }, [products]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      mobileSDK.sendTrackScreenEvent(
+        `rn luma: content: ${Platform.OS}: us: en: products`,
+      );
+    }, []),
+  );
+
   useEffect(() => {
     // Fetch products
     getProducts();
@@ -40,11 +51,11 @@ function ProductsContainer({navigation}: {navigation: any}) {
   ) : (
     <ScrollView>
       <View style={productsCommonStyles.wrapper}>
-        {Platform.OS === 'ios' && (
+        {/* {Platform.OS === 'ios' && (
           <Text style={[productsCommonStyles.header, {color: colors.text}]}>
             Products
           </Text>
-        )}
+        )} */}
         {products.length > 0 && (
           <>
             <FeaturedProductsList

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, useColorScheme} from 'react-native';
+import {useColorScheme} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -12,15 +12,12 @@ import {
   SettingsScreen,
   LocationScreen,
   ProductsStackScreen,
+  PersonalizationPage,
 } from '../../../features';
 
-function PersonalisationScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Personalisation!</Text>
-    </View>
-  );
-}
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {useDispatch} from '../../../hooks';
+import {setAppTrackingTransparencyStatus} from '../../../reducers/actions';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,27 +29,22 @@ type IconType = {
 
 export default function ApplicationNavigator() {
   const scheme = useColorScheme();
+  const dispatch = useDispatch();
 
-  const getHomeHeaderRight = (props: {
-    tintColor?: string;
-    pressColor?: string;
-    pressOpacity?: number;
-  }) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          // height: 30,
-          marginHorizontal: 20,
-          marginTop: 10,
-          // marginBottom: 30,
-        }}>
-        <Icon name="person" size={30} color={props.tintColor} />
-      </View>
-    );
+  const requestAppTrackingPermission = async () => {
+    check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      if (result !== RESULTS.GRANTED) {
+        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(status => {
+          console.log('ATT:', status);
+          dispatch(setAppTrackingTransparencyStatus(status));
+        });
+      }
+    });
   };
+
+  React.useEffect(() => {
+    requestAppTrackingPermission();
+  }, []);
 
   const getTabBarIcon = (
     tabName: string,
@@ -111,15 +103,13 @@ export default function ApplicationNavigator() {
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
+      <Tab.Navigator>
         <Tab.Screen
-          name="Home"
+          name="Home page"
           component={HomeScreen}
           options={{
-            headerRight: getHomeHeaderRight,
             tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
-            // headerTransparent: true,
-            // headerTitleStyle: {display: 'none'},
+            headerShown: false,
           }}
         />
         <Tab.Screen
@@ -127,27 +117,27 @@ export default function ApplicationNavigator() {
           component={ProductsStackScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
-            // headerTransparent: true,
-            // headerTitleStyle: {display: 'none'},
+            headerShown: false,
           }}
         />
         <Tab.Screen
-          name="Personalisation"
-          component={PersonalisationScreen}
+          name="Personalisation page"
+          component={PersonalizationPage}
           options={{
+            headerShown: false,
             tabBarIcon: (props: IconType) =>
               getTabBarIcon('personalisation', props),
           }}
         />
         <Tab.Screen
-          name="Location"
+          name="Location page"
           component={LocationScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
           }}
         />
         <Tab.Screen
-          name="Settings"
+          name="Settings page"
           component={SettingsScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),

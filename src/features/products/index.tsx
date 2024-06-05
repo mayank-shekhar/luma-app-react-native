@@ -4,18 +4,9 @@ import {View, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ProductsContainer} from './containers';
 import {ProductDetails} from './components';
+import {HeaderButtonProps} from '../../types';
 
 const ProductsStack = createNativeStackNavigator();
-export type HeaderButtonProps = {
-  /**
-   * Tint color for the header.
-   */
-  tintColor?: string;
-  /**
-   * Whether it's possible to navigate back in stack.
-   */
-  canGoBack: boolean;
-};
 
 function ProductsStackScreen() {
   function getDetailsHeaderTitle(route: any) {
@@ -44,13 +35,18 @@ function ProductsStackScreen() {
 
   return (
     <ProductsStack.Navigator>
-      <ProductsStack.Screen name="Products" component={ProductsContainer} />
+      <ProductsStack.Screen
+        name="Products"
+        component={ProductsContainer}
+        // options={{headerShown: Platform.OS === 'ios' ? false : true}}
+      />
       <ProductsStack.Screen
         name="Details"
         component={ProductDetails}
         options={({route}) => ({
           headerTitle: getDetailsHeaderTitle(route),
           headerRight: props => getDetailsPageHeaderOptions(route, props),
+          headerBackButtonMenuEnabled: true,
         })}
       />
     </ProductsStack.Navigator>

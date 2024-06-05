@@ -17,7 +17,11 @@ export default StyleSheet.create({
   },
 
   categoryText: {color: '#999', fontWeight: '500'},
-  productDescription: {fontSize: 18, marginTop: 10},
+  productDescription: {
+    fontSize: 18,
+    marginTop: 10,
+    lineHeight: 30,
+  },
   metaDataContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -31,7 +35,8 @@ export default StyleSheet.create({
     borderRadius: 4,
   },
   productSize: {
-    padding: 3,
+    minWidth: 20,
+    // height: 20,
     borderRadius: 4,
     overflow: 'hidden',
     alignItems: 'center',
@@ -39,7 +44,8 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   productSizeText: {
-    fontSize: 12,
+    fontSize: 16,
+    flex: 1,
   },
   productPriceText: {
     fontSize: 18,

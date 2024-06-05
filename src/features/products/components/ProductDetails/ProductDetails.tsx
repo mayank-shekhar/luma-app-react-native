@@ -1,6 +1,14 @@
 import * as React from 'react';
 
-import {View, Text, Image, useColorScheme, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  useColorScheme,
+  ScrollView,
+  Platform,
+} from 'react-native';
+import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {Product} from '../../../../models/Products';
 import {
   sanitizeProductCategory,
@@ -9,14 +17,35 @@ import {
 import {useTheme} from '@react-navigation/native';
 import ProductDetailsStyle from './ProductDetails.style';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useMobileSDK} from '../../../../hooks';
 
 const CURRENCY = '$';
 
 const ProductDetails = ({_navigation, route}: any) => {
   const {colors} = useTheme();
+  const mobileSDK = useMobileSDK();
   const colorsScheme = useColorScheme();
   const isDarkMode = colorsScheme === 'dark';
   const product = route.params.product as Product;
+
+  // process iOS app tracking transparency
+  const processATT = async () => {
+    check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      if (result === RESULTS.GRANTED) {
+        console.log('ATT granted');
+        mobileSDK.sendCommerceExperienceEvent('productViews', product);
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    // sdk events
+    mobileSDK.sendTrackScreenEvent(
+      `rn luma: content: ${Platform.OS}: us: en: product`,
+    );
+    processATT();
+  }, []);
+
   return (
     <ScrollView>
       <View style={{backgroundColor: colors.card}}>
