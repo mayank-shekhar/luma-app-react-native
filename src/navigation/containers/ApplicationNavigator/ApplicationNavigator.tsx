@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, useColorScheme} from 'react-native';
+import {useColorScheme} from 'react-native';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -12,19 +12,12 @@ import {
   SettingsScreen,
   LocationScreen,
   ProductsStackScreen,
+  PersonalizationPage,
 } from '../../../features';
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {useDispatch} from '../../../hooks';
 import {setAppTrackingTransparencyStatus} from '../../../reducers/actions';
-
-function PersonalisationScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Personalisation!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
@@ -129,8 +122,9 @@ export default function ApplicationNavigator() {
         />
         <Tab.Screen
           name="Personalisation page"
-          component={PersonalisationScreen}
+          component={PersonalizationPage}
           options={{
+            headerShown: false,
             tabBarIcon: (props: IconType) =>
               getTabBarIcon('personalisation', props),
           }}
