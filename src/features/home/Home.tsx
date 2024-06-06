@@ -64,7 +64,7 @@ function RootHomeScreen() {
   return (
     <RootStack.Navigator>
       <RootStack.Screen
-        name="Home"
+        name="Home "
         component={HomeScreen}
         options={navigation => ({
           headerShown: true,

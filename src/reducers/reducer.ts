@@ -2,6 +2,9 @@ import {AppplicationStateType} from '../providers/StateProvider/StateProvider';
 import {ActionTypes} from './actions';
 
 export const InitialAppState: AppplicationStateType = {
+  environmentFileId:
+    'bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development',
+  configLocation: '',
   isReady: false,
   appTrackingTransparencyStatus: 'unavailable',
   home: {
@@ -58,6 +61,21 @@ function appReducer(
       return {
         ...state,
         appTrackingTransparencyStatus: action.payload,
+      };
+    case ActionTypes.SET_ENVIRONMENT_FILE_ID:
+      return {
+        ...state,
+        environmentFileId: action.payload,
+      };
+    case ActionTypes.SET_CONFIF_LOCATION:
+      return {
+        ...state,
+        configLocation: action.payload,
+      };
+    case ActionTypes.SET_DEVICE_TOKEN:
+      return {
+        ...state,
+        deviceToken: action.payload,
       };
     default:
       return state;

@@ -36,7 +36,7 @@ function ProductsStackScreen() {
   return (
     <ProductsStack.Navigator>
       <ProductsStack.Screen
-        name="Products"
+        name="Products "
         component={ProductsContainer}
         // options={{headerShown: Platform.OS === 'ios' ? false : true}}
       />

@@ -17,3 +17,12 @@ export function sanitizeProductCategory(category: string): string {
 export function numToTwoDecimals(num: string | number): string {
   return parseFloat(num.toString()).toFixed(2);
 }
+
+/**
+ * Checks if the given environment file ID is valid.
+ * @param environmentFileId - The environment file ID to check.
+ * @returns True if the environment file ID is valid, false otherwise.
+ */
+export function isValidEnvironmentFileId(environmentFileId: string): boolean {
+  return environmentFileId.length > 0;
+}

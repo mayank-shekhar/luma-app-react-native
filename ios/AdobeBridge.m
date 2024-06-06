@@ -32,7 +32,7 @@ static NSString* const EnvironmentId = @"bf7248f92b53/e1048832e7d6/launch-41a6b2
 {
   const UIApplicationState appState = application.applicationState;
   
-  [AEPMobileCore setLogLevel:AEPLogLevelDebug];
+  [AEPMobileCore setLogLevel:AEPLogLevelTrace];
   [AEPMobileCore configureWithAppId:EnvironmentId];
   [AEPMobileCore
         registerExtensions:@[

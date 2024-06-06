@@ -105,7 +105,7 @@ export default function ApplicationNavigator() {
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Tab.Navigator>
         <Tab.Screen
-          name="Home page"
+          name="Home"
           component={HomeScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
@@ -113,7 +113,7 @@ export default function ApplicationNavigator() {
           }}
         />
         <Tab.Screen
-          name="Products list"
+          name="Products"
           component={ProductsStackScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
@@ -121,7 +121,7 @@ export default function ApplicationNavigator() {
           }}
         />
         <Tab.Screen
-          name="Personalisation page"
+          name="Personalisation"
           component={PersonalizationPage}
           options={{
             headerShown: false,
@@ -130,14 +130,14 @@ export default function ApplicationNavigator() {
           }}
         />
         <Tab.Screen
-          name="Location page"
+          name="Location"
           component={LocationScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
           }}
         />
         <Tab.Screen
-          name="Settings page"
+          name="Settings"
           component={SettingsScreen}
           options={{
             tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
