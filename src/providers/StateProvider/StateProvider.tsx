@@ -71,15 +71,15 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
     fetchConfiguration().then(configuration => {
       setConfig(configuration);
     });
-    DeviceInfo.getDeviceToken()
-      .then(deviceToken => {
-        // iOS: "a2Jqsd0kanz..."
-        dispatch(setDeviceToken(deviceToken));
-      })
-      .catch(err => {
-        console.error('Error getting device token:', err);
-        dispatch(setDeviceToken('Not physical device'));
-      });
+    // DeviceInfo.getDeviceToken()
+    //   .then(deviceToken => {
+    //     // iOS: "a2Jqsd0kanz..."
+    //     dispatch(setDeviceToken(deviceToken));
+    //   })
+    //   .catch(err => {
+    //     console.error('Error getting device token:', err);
+    //     dispatch(setDeviceToken('Not physical device'));
+    //   });
   }, []);
   const MobileSDKInstance = React.useMemo(() => {
     return new MobileSDK(state, dispatch, config as Configuration);

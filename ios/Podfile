@@ -22,31 +22,6 @@ node_require('react-native-permissions/scripts/setup.rb')
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-# ⬇️ Uncomment the wanted permissions
-setup_permissions([
-   'AppTrackingTransparency',
-  # 'Bluetooth',
-  # 'Calendars',
-  # 'CalendarsWriteOnly',
-  # 'Camera',
-  # 'Contacts',
-  # 'FaceID',
-  # 'LocationAccuracy',
-  # 'LocationAlways',
-  # 'LocationWhenInUse',
-  # 'MediaLibrary',
-  # 'Microphone',
-  # 'Motion',
-   'Notifications',
-  # 'PhotoLibrary',
-  # 'PhotoLibraryAddOnly',
-  # 'Reminders',
-  # 'Siri',
-  # 'SpeechRecognition',
-  # 'StoreKit',
-])
-
-
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
@@ -56,7 +31,38 @@ end
 
 target 'LumaAppReactNative' do
   config = use_native_modules!
+  
+  # ⬇️ Uncomment the wanted permissions
+  setup_permissions([
+     'AppTrackingTransparency',
+    # 'Bluetooth',
+    # 'Calendars',
+    # 'CalendarsWriteOnly',
+    # 'Camera',
+    # 'Contacts',
+    # 'FaceID',
+    # 'LocationAccuracy',
+    # 'LocationAlways',
+    # 'LocationWhenInUse',
+    # 'MediaLibrary',
+    # 'Microphone',
+    # 'Motion',
+     'Notifications',
+    # 'PhotoLibrary',
+    # 'PhotoLibraryAddOnly',
+    # 'Reminders',
+    # 'Siri',
+    # 'SpeechRecognition',
+    # 'StoreKit',
+  ])
 
+#  use_frameworks! :linkage => :static
+    pod 'Firebase', :modular_headers => true
+    pod 'FirebaseCore', :modular_headers => true
+    pod 'GoogleUtilities', :modular_headers => true
+    $RNFirebaseAsStaticFramework = true
+#  $RNFirebaseAsStaticFramework = true
+  
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
@@ -85,3 +91,9 @@ target 'LumaAppReactNative' do
     )
   end
 end
+
+#target 'richNotification' do
+#    pod 'FirebaseCoreInternal', :modular_headers => true
+#    pod 'Firebase/Messaging', :modular_headers => true
+#    pod 'GoogleUtilities', :modular_headers => true
+#end
