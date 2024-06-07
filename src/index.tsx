@@ -5,10 +5,16 @@ import {MobileCore} from '@adobe/react-native-aepcore';
 import {ApplicationNavigator} from './navigation/containers';
 import {StateProvider} from './providers';
 import appReducer, {InitialAppState} from './reducers/reducer';
-// import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch} from './hooks';
 import {setDeviceToken} from './reducers/actions';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
+import {useColorScheme} from 'react-native';
 
 async function requestUserPermission(): Promise<boolean> {
   try {
@@ -28,6 +34,14 @@ async function requestUserPermission(): Promise<boolean> {
 }
 
 async function registerForPushNotifications(): Promise<string> {
+  if (Platform.OS === 'ios') {
+    try {
+      await messaging().registerDeviceForRemoteMessages();
+    } catch (e) {
+      console.error('Failed to register for remote messages:', e);
+      return Promise.reject(e);
+    }
+  }
   try {
     const token = await messaging().getToken();
     return Promise.resolve(token);
@@ -45,9 +59,12 @@ function App() {
     dispatch(setDeviceToken(token));
   };
   useEffect(() => {
-    // PermissionsAndroid.request(
-    //   PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    // );
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
+
     configurePushNotifications();
     console.log('AdobeExperienceSDK: Initializing SDK');
     MobileCore.getLogLevel().then(level =>
@@ -59,9 +76,12 @@ function App() {
 }
 
 function ApplicationWithProviders() {
+  const scheme = useColorScheme();
   return (
     <StateProvider reducer={appReducer} initialState={InitialAppState}>
-      <App />
+      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <App />
+      </NavigationContainer>
     </StateProvider>
   );
 }

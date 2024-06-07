@@ -8,6 +8,7 @@ import {
   Alert,
   Platform,
   TextInput,
+  ScrollView,
 } from 'react-native';
 
 import commonStyles from '../../styles/common.styles';
@@ -173,7 +174,11 @@ function SettingsScreen() {
                     </View>
                     <View style={styles.configItemRow}>
                       <Text style={styles.configItemTitle}>Device Token:</Text>
-                      <Text style={styles.configItemValue}>{deviceToken}</Text>
+                      <ScrollView>
+                        <Text style={styles.configItemValue}>
+                          {deviceToken}
+                        </Text>
+                      </ScrollView>
                     </View>
                   </View>
                 </AccordionItem>

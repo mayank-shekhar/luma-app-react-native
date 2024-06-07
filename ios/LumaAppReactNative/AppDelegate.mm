@@ -1,12 +1,11 @@
 
-
+//#import "RNFBMessagingModule.h"
+#import "Firebase.h"
 #import "AppDelegate.h"
 #import "AdobeBridge.h"
 
 #import <React/RCTBundleURLProvider.h>
-//#import <React/RCTLinkingManager.h>
-//#import <React/RCTConvert.h>
-#import <Firebase.h>
+
 
 @implementation AppDelegate
 
@@ -16,6 +15,7 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+  
   [FIRApp configure];
   
   [AdobeBridge configureAnalytics:application];

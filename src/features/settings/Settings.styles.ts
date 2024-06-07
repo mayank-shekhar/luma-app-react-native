@@ -1,4 +1,4 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Theme} from '../../types';
 
 export default function SettingsStyles(colors: Theme['colors']) {
@@ -10,7 +10,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
 
     header: {
       fontSize: 36,
-      fontWeight: 'bold',
+      fontWeight: '600',
       color: '#000',
       marginVertical: 10,
     },
@@ -19,7 +19,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
       flexDirection: 'column',
     },
     sectionHeader: {
-      fontWeight: 400,
+      fontWeight: '400',
       textTransform: 'uppercase',
       fontSize: 15,
       color: colors.text,

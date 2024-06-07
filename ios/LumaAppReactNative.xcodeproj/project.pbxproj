@@ -59,6 +59,7 @@
 		7629EAE82BED297E00493595 /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		765A91542C06250400C3021B /* AdobeBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdobeBridge.m; sourceTree = "<group>"; };
 		765A91562C06251F00C3021B /* AdobeBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdobeBridge.h; sourceTree = "<group>"; };
+		76811E3D2C12E1AC008BA6BF /* LumaAppReactNative.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LumaAppReactNative.entitlements; path = LumaAppReactNative/LumaAppReactNative.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LumaAppReactNative/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LumaAppReactNative-LumaAppReactNativeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LumaAppReactNative-LumaAppReactNativeTests.release.xcconfig"; path = "Target Support Files/Pods-LumaAppReactNative-LumaAppReactNativeTests/Pods-LumaAppReactNative-LumaAppReactNativeTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -104,6 +105,7 @@
 		13B07FAE1A68108700A75B9A /* LumaAppReactNative */ = {
 			isa = PBXGroup;
 			children = (
+				76811E3D2C12E1AC008BA6BF /* LumaAppReactNative.entitlements */,
 				76217CF32C120ACA00C7E34A /* GoogleService-Info.plist */,
 				7629EAE32BED293500493595 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -529,6 +531,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LumaAppReactNative/LumaAppReactNative.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RS7UL4T724;
 				ENABLE_BITCODE = NO;
@@ -571,6 +574,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LumaAppReactNative/LumaAppReactNative.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RS7UL4T724;
 				INFOPLIST_FILE = LumaAppReactNative/Info.plist;
