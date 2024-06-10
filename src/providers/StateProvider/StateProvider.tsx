@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {AppState} from 'react-native';
-import {ActionType, setDeviceToken} from '../../reducers/actions';
+import {ActionType, setConfiguration} from '../../reducers/actions';
 import {InitialAppState} from '../../reducers/reducer';
 import {MobileSDK} from '../../utils/MobileSDK';
 import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
-import DeviceInfo from 'react-native-device-info';
+// import DeviceInfo from 'react-native-device-info';
+import {PermissionStatus} from 'react-native-permissions';
 
 export type AppplicationStateType = {
   deviceToken: string;
@@ -15,10 +16,11 @@ export type AppplicationStateType = {
    * JSON configuration file location
    */
   configLocation?: string;
+  configuration?: Configuration;
   isReady: boolean;
   isOptedOut?: boolean;
   isPushEnabled?: boolean;
-  appTrackingTransparencyStatus?: string;
+  appTrackingTransparencyStatus?: PermissionStatus;
 
   // home screen state
   home: {
@@ -70,6 +72,7 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
     // Load configuration
     fetchConfiguration().then(configuration => {
       setConfig(configuration);
+      dispatch(setConfiguration(configuration));
     });
     // DeviceInfo.getDeviceToken()
     //   .then(deviceToken => {

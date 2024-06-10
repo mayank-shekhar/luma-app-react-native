@@ -211,4 +211,19 @@ export class MobileSDK {
     const commerceExperienceEvent = new ExperienceEvent({xdmData: xdmData});
     Edge.sendEvent(commerceExperienceEvent);
   }
+
+  public async sendTestPushEvent(applicationId: string, eventType: string) {
+    // implementation
+    console.log(`Test push event: ${eventType}`);
+    const xdmData: Record<string, any> = {
+      eventType: `push.${eventType}`,
+      push: {
+        [eventType]: {
+          value: 1,
+        },
+      },
+    };
+    const testPushEvent = new ExperienceEvent({xdmData: xdmData});
+    Edge.sendEvent(testPushEvent);
+  }
 }

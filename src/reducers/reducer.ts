@@ -5,6 +5,7 @@ export const InitialAppState: AppplicationStateType = {
   environmentFileId:
     'bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development',
   configLocation: '',
+  configuration: undefined,
   isReady: false,
   appTrackingTransparencyStatus: 'unavailable',
   home: {
@@ -76,6 +77,11 @@ function appReducer(
       return {
         ...state,
         deviceToken: action.payload,
+      };
+    case ActionTypes.SET_CONFIGURATION:
+      return {
+        ...state,
+        configuration: action.payload,
       };
     default:
       return state;

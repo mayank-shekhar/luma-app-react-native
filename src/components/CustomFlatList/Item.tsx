@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 12,
-    fontWeight: '500',
+    fontSize: 10,
+    fontWeight: '700',
   },
 });
 

@@ -13,7 +13,9 @@ import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch} from '../../../hooks';
 import {setAppTrackingTransparencyStatus} from '../../../reducers/actions';
-import {Alert} from 'react-native';
+import {Alert, SafeAreaView, Platform} from 'react-native';
+import {DisclaimerView} from '../../../components';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,20 +27,42 @@ type IconType = {
 
 export default function ApplicationNavigator() {
   const dispatch = useDispatch();
+  const [showDisclaimer, setShowDisclaimer] = React.useState(
+    Platform.OS === 'ios',
+  );
+  const [appTrackingTransparencyStatus, setAppTTStatus] = React.useState('');
 
   const requestAppTrackingPermission = async () => {
     check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
-      if (result !== RESULTS.GRANTED) {
-        request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(status => {
-          console.log('ATT:', status);
-          dispatch(setAppTrackingTransparencyStatus(status));
-        });
+      console.log('oon checking ATT status:', result);
+      setAppTTStatus(result);
+      dispatch(setAppTrackingTransparencyStatus(result));
+      if (result === RESULTS.GRANTED) {
+        setShowDisclaimer(false);
       }
     });
   };
 
+  const askForAppTrackingPermission = async () => {
+    request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      console.log('on requesting ATT status:', result);
+      dispatch(setAppTrackingTransparencyStatus(result));
+      if (result === RESULTS.GRANTED) {
+        setShowDisclaimer(false);
+      }
+    });
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (Platform.OS === 'ios') {
+        requestAppTrackingPermission();
+      }
+    }, []),
+  );
+
   React.useEffect(() => {
-    requestAppTrackingPermission();
+    askForAppTrackingPermission();
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
@@ -102,48 +126,57 @@ export default function ApplicationNavigator() {
   };
 
   return (
-    // <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Products"
-        component={ProductsStackScreen}
-        options={{
-          tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Personalisation"
-        component={PersonalizationPage}
-        options={{
-          headerShown: false,
-          tabBarIcon: (props: IconType) =>
-            getTabBarIcon('personalisation', props),
-        }}
-      />
-      <Tab.Screen
-        name="Location"
-        component={LocationScreen}
-        options={{
-          tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
-        }}
-      />
-    </Tab.Navigator>
-    // </NavigationContainer>
+    <>
+      {showDisclaimer ? (
+        <SafeAreaView>
+          <DisclaimerView
+            appTrackingTransparencyStatus={appTrackingTransparencyStatus}
+            onContinueClick={askForAppTrackingPermission}
+          />
+        </SafeAreaView>
+      ) : (
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Products"
+            component={ProductsStackScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Personalisation"
+            component={PersonalizationPage}
+            options={{
+              headerShown: false,
+              tabBarIcon: (props: IconType) =>
+                getTabBarIcon('personalisation', props),
+            }}
+          />
+          <Tab.Screen
+            name="Location"
+            component={LocationScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
+            }}
+          />
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
+            }}
+          />
+        </Tab.Navigator>
+      )}
+    </>
   );
 }

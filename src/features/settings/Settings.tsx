@@ -21,6 +21,8 @@ import {isValidEnvironmentFileId} from '../../utils/stringModifiers';
 import {AccordionItem} from '../../components';
 import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
+import {RESULTS} from 'react-native-permissions';
+import DeviceInfo from 'react-native-device-info';
 
 function SettingsScreen() {
   const colors = useTheme();
@@ -31,7 +33,13 @@ function SettingsScreen() {
   const [isEnvironmentFileIdValid, setIsEnvironmentFileIdValid] =
     React.useState(true);
   const mobileSDK = useMobileSDK();
-  const {environmentFileId, configLocation, deviceToken} = useAppState();
+  const {
+    environmentFileId,
+    configLocation,
+    deviceToken,
+    appTrackingTransparencyStatus,
+  } = useAppState();
+  console.log('appTrackingTransparencyStatus', appTrackingTransparencyStatus);
   const dispatch = useDispatch();
   useFocusEffect(
     React.useCallback(() => {
@@ -73,6 +81,14 @@ function SettingsScreen() {
     console.log('Config location changed to:', text);
     dispatch(setConfigLocation(text));
     raiseRestartAlert();
+  };
+
+  const onDeliverPushNotificationClick = async () => {
+    const eventType = 'testPushEventType';
+    console.log('Sending push notification...');
+    const bundleIdentifier = DeviceInfo.getBundleId();
+    console.log({bundleIdentifier, eventType});
+    // mobileSDK.sendTestPushEvent()
   };
 
   return (
@@ -210,7 +226,10 @@ function SettingsScreen() {
               <Button title="In-App Message" />
             </View>
             <View style={styles.buttonWrapepr}>
-              <Button title="Push Notification" />
+              <Button
+                onPress={onDeliverPushNotificationClick}
+                title="Push Notification"
+              />
             </View>
           </View>
         </View>
@@ -225,12 +244,25 @@ function SettingsScreen() {
               <Button title="View" onPress={() => setTermsModalVisible(true)} />
             </View>
           </View>
-          <View style={styles.settingsListItem}>
-            <Text style={styles.textNote}>Tracking is allowed...</Text>
-            <View style={styles.buttonWrapepr}>
-              <Button title="App settings" />
+          {Platform.OS === 'ios' && (
+            <View style={styles.settingsListItem}>
+              <Text
+                style={[
+                  styles.textNote,
+                  {
+                    color:
+                      appTrackingTransparencyStatus !== RESULTS.GRANTED
+                        ? 'red'
+                        : 'inherit',
+                  },
+                ]}>
+                Tracking is allowed...
+              </Text>
+              <View style={styles.buttonWrapepr}>
+                <Button title="App settings" />
+              </View>
             </View>
-          </View>
+          )}
         </View>
       </View>
       <View style={styles.footnoteWrapper}>

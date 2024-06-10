@@ -5,3 +5,4 @@ export {default as PlatformSpecificList} from './PlatformSpecificList/PlatformSp
 export {default as FullScreenLoader} from './FullScreenLoader/FullScreenLoader';
 export * from './CustomFlatList/Item';
 export {default as AccordionItem} from './AccordionItem/AccordionItem';
+export {default as DisclaimerView} from './DisclaimerView/DisclaimerView';

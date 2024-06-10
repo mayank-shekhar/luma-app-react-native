@@ -16,6 +16,7 @@ export const ActionTypes = {
   SET_ENVIRONMENT_FILE_ID: 'SET_ENVIRONMENT_FILE_ID',
   SET_CONFIF_LOCATION: 'SET_CONFIF_LOCATION',
   SET_DEVICE_TOKEN: 'SET_DEVICE_TOKEN',
+  SET_CONFIGURATION: 'SET_CONFIGURATION',
 };
 
 export function setEcid(ecid: string): ActionType {
@@ -65,5 +66,12 @@ export function setDeviceToken(deviceToken: string): ActionType {
   return {
     type: ActionTypes.SET_DEVICE_TOKEN,
     payload: deviceToken,
+  };
+}
+
+export function setConfiguration(configuration: Configuration): ActionType {
+  return {
+    type: ActionTypes.SET_CONFIGURATION,
+    payload: configuration,
   };
 }

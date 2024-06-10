@@ -4,12 +4,12 @@ export default StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 20,
-    marginTop: 100,
+    marginTop: 30,
   },
 
   header: {
-    fontSize: 22,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '600',
     color: '#000',
     paddingVertical: 10,
     paddingHorizontal: 20,
