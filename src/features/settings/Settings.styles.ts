@@ -36,13 +36,19 @@ export default function SettingsStyles(colors: Theme['colors']) {
       flexDirection: 'row',
       paddingHorizontal: 16,
       paddingVertical: 8,
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      alignContent: 'center',
+    },
+    testProfileSection: {
+      borderBottomColor: colors.border,
+      borderBottomWidth: 1,
     },
     buttonWrapepr: {
       backgroundColor: colors.background,
       borderRadius: 8,
-      paddingHorizontal: 8,
-      fontSize: 12,
+      paddingHorizontal: 4,
+      fontSize: 11,
     },
     textNote: {
       fontSize: 14,

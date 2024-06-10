@@ -12,7 +12,9 @@ export default function DisclaimerView({
   onContinueClick: () => void;
   appTrackingTransparencyStatus: string;
 }) {
-  const {configuration} = useAppState();
+  const {
+    config: {appConfig},
+  } = useAppState();
   const mobileSDK = useMobileSDK();
 
   const onOpenSettingsClick = () => {
@@ -38,9 +40,7 @@ export default function DisclaimerView({
       <View style={{paddingVertical: 20}}>
         <Text style={{fontSize: 17, textAlign: 'center', lineHeight: 24}}>
           Welcome to the{' '}
-          <Text style={{fontWeight: '600'}}>
-            {configuration?.customer.name}
-          </Text>{' '}
+          <Text style={{fontWeight: '600'}}>{appConfig?.customer.name}</Text>{' '}
           iOS Sample App, showing how to use the Adobe Experience Platform
           Mobile SDK…
         </Text>

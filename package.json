@@ -41,6 +41,7 @@
     "react-native-screens": "^3.31.1",
     "react-native-vector-icons": "^10.1.0",
     "react-native-webview": "^13.10.2",
+    "use-reducer-logger": "^1.0.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

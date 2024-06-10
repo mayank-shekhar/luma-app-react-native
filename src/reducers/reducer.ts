@@ -2,12 +2,9 @@ import {AppplicationStateType} from '../providers/StateProvider/StateProvider';
 import {ActionTypes} from './actions';
 
 export const InitialAppState: AppplicationStateType = {
-  environmentFileId:
-    'bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development',
-  configLocation: '',
-  configuration: undefined,
+  // configLocation: '',
+  // configuration: undefined,
   isReady: false,
-  appTrackingTransparencyStatus: 'unavailable',
   home: {
     userProfile: {
       isPaidUser: false,
@@ -17,6 +14,17 @@ export const InitialAppState: AppplicationStateType = {
       email: '',
       crmId: '112ca06ed53d3db37e4cea49cc45b71e',
     },
+  },
+  config: {
+    environmentFileId:
+      'bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development',
+    configurationLocation: '',
+    appConfig: undefined,
+    appTrackingTransparencyStatus: 'unavailable',
+    deviceToken: '',
+    deviceId: '',
+    isConfigurationModeEnabled: true,
+    isTestProfileEnabled: false,
   },
 };
 
@@ -61,27 +69,58 @@ function appReducer(
     case ActionTypes.SET_APP_TRACKING_TRANSPARENCY_STATUS:
       return {
         ...state,
-        appTrackingTransparencyStatus: action.payload,
+        config: {
+          ...state.config,
+          appTrackingTransparencyStatus: action.payload,
+        },
       };
     case ActionTypes.SET_ENVIRONMENT_FILE_ID:
       return {
         ...state,
-        environmentFileId: action.payload,
+        config: {
+          ...state.config,
+          environmentFileId: action.payload,
+        },
       };
     case ActionTypes.SET_CONFIF_LOCATION:
       return {
         ...state,
-        configLocation: action.payload,
+        config: {
+          ...state.config,
+          configurationLocation: action.payload,
+        },
       };
     case ActionTypes.SET_DEVICE_TOKEN:
       return {
         ...state,
-        deviceToken: action.payload,
+        config: {
+          ...state.config,
+          deviceToken: action.payload,
+        },
       };
     case ActionTypes.SET_CONFIGURATION:
       return {
         ...state,
-        configuration: action.payload,
+        config: {
+          ...state.config,
+          appConfig: action.payload,
+        },
+      };
+    case ActionTypes.SET_TEST_PROFILE_ENABLED:
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          isTestProfileEnabled: action.payload,
+        },
+      };
+    case ActionTypes.SET_CONFIGURATION_MODE:
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          isConfigurationModeEnabled: action.payload,
+        },
       };
     default:
       return state;

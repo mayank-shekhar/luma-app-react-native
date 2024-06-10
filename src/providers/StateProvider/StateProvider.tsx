@@ -7,20 +7,10 @@ import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
 // import DeviceInfo from 'react-native-device-info';
 import {PermissionStatus} from 'react-native-permissions';
+import logger from 'use-reducer-logger';
 
 export type AppplicationStateType = {
-  deviceToken: string;
-  deviceId: string;
-  environmentFileId: string;
-  /**
-   * JSON configuration file location
-   */
-  configLocation?: string;
-  configuration?: Configuration;
   isReady: boolean;
-  isOptedOut?: boolean;
-  isPushEnabled?: boolean;
-  appTrackingTransparencyStatus?: PermissionStatus;
 
   // home screen state
   home: {
@@ -32,6 +22,19 @@ export type AppplicationStateType = {
       email: string;
       crmId: string;
     };
+  };
+
+  config: {
+    isTestProfileEnabled?: boolean;
+    isConfigurationModeEnabled?: boolean;
+    configurationLocation?: string;
+    isOptedOut?: boolean;
+    isPushEnabled?: boolean;
+    appTrackingTransparencyStatus?: PermissionStatus;
+    appConfig?: Configuration;
+    environmentFileId: string;
+    deviceToken: string;
+    deviceId: string;
   };
 
   // app state
@@ -61,7 +64,7 @@ export type StateProviderProps = {
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
   const [config, setConfig] = React.useState<Configuration | null>(null);
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(logger(reducer), initialState);
 
   const fetchConfiguration = async () => {
     // Fetch configuration

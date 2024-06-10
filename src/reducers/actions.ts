@@ -17,6 +17,8 @@ export const ActionTypes = {
   SET_CONFIF_LOCATION: 'SET_CONFIF_LOCATION',
   SET_DEVICE_TOKEN: 'SET_DEVICE_TOKEN',
   SET_CONFIGURATION: 'SET_CONFIGURATION',
+  SET_TEST_PROFILE_ENABLED: 'SET_TEST_PROFILE_ENABLED',
+  SET_CONFIGURATION_MODE: 'SET_CONFIGURATION_MODE',
 };
 
 export function setEcid(ecid: string): ActionType {
@@ -73,5 +75,23 @@ export function setConfiguration(configuration: Configuration): ActionType {
   return {
     type: ActionTypes.SET_CONFIGURATION,
     payload: configuration,
+  };
+}
+
+export function setTestProfileEnabled(
+  isTestProfileEnabled: boolean,
+): ActionType {
+  return {
+    type: ActionTypes.SET_TEST_PROFILE_ENABLED,
+    payload: isTestProfileEnabled,
+  };
+}
+
+export function setConfigurationMode(
+  isConfigurationModeEnabled: boolean,
+): ActionType {
+  return {
+    type: ActionTypes.SET_CONFIGURATION_MODE,
+    payload: isConfigurationModeEnabled,
   };
 }

@@ -11,11 +11,14 @@ import {
 
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
-import {useDispatch} from '../../../hooks';
-import {setAppTrackingTransparencyStatus} from '../../../reducers/actions';
-import {Alert, SafeAreaView, Platform} from 'react-native';
+import {useAppState, useDispatch} from '../../../hooks';
+import {
+  setAppTrackingTransparencyStatus,
+  setConfigurationMode,
+} from '../../../reducers/actions';
+import {Alert, SafeAreaView, Platform, View, Pressable} from 'react-native';
 import {DisclaimerView} from '../../../components';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,10 +30,14 @@ type IconType = {
 
 export default function ApplicationNavigator() {
   const dispatch = useDispatch();
+  const {colors} = useTheme();
   const [showDisclaimer, setShowDisclaimer] = React.useState(
     Platform.OS === 'ios',
   );
   const [appTrackingTransparencyStatus, setAppTTStatus] = React.useState('');
+  const {
+    config: {isConfigurationModeEnabled},
+  } = useAppState();
 
   const requestAppTrackingPermission = async () => {
     check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
@@ -125,6 +132,21 @@ export default function ApplicationNavigator() {
     );
   };
 
+  const onSettingsTap = () => {
+    console.log('Settings clicked');
+    dispatch(setConfigurationMode(!isConfigurationModeEnabled));
+  };
+
+  const settingsRightIcon = () => {
+    return (
+      <View style={{paddingHorizontal: 15}}>
+        <Pressable onPress={onSettingsTap}>
+          <Icon name="extension-puzzle" color={colors.border} size={24} />
+        </Pressable>
+      </View>
+    );
+  };
+
   return (
     <>
       {showDisclaimer ? (
@@ -173,6 +195,7 @@ export default function ApplicationNavigator() {
             component={SettingsScreen}
             options={{
               tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
+              headerRight: settingsRightIcon,
             }}
           />
         </Tab.Navigator>
