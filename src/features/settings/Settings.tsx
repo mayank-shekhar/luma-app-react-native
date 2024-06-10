@@ -38,6 +38,9 @@ function SettingsScreen() {
     configLocation,
     deviceToken,
     appTrackingTransparencyStatus,
+    home: {
+      identities: {email},
+    },
   } = useAppState();
   console.log('appTrackingTransparencyStatus', appTrackingTransparencyStatus);
   const dispatch = useDispatch();
@@ -85,10 +88,8 @@ function SettingsScreen() {
 
   const onDeliverPushNotificationClick = async () => {
     const eventType = 'testPushEventType';
-    console.log('Sending push notification...');
     const bundleIdentifier = DeviceInfo.getBundleId();
-    console.log({bundleIdentifier, eventType});
-    // mobileSDK.sendTestPushEvent()
+    mobileSDK.sendTestPushEvent(bundleIdentifier, eventType);
   };
 
   return (
@@ -218,22 +219,25 @@ function SettingsScreen() {
       )}
 
       {/* Test section */}
-      <View style={styles.settingsSectionWrapper}>
-        <Text style={styles.sectionHeader}>Test</Text>
-        <View style={styles.sectionContainer}>
-          <View style={styles.testSection}>
-            <View style={styles.buttonWrapepr}>
-              <Button title="In-App Message" />
-            </View>
-            <View style={styles.buttonWrapepr}>
-              <Button
-                onPress={onDeliverPushNotificationClick}
-                title="Push Notification"
-              />
+      {email !== '' && (
+        <View style={styles.settingsSectionWrapper}>
+          <Text style={styles.sectionHeader}>Test</Text>
+          <View style={styles.sectionContainer}>
+            <View style={styles.testSection}>
+              <View style={styles.buttonWrapepr}>
+                <Button title="In-App Message" />
+              </View>
+              <View style={styles.buttonWrapepr}>
+                <Button
+                  onPress={onDeliverPushNotificationClick}
+                  title="Push Notification"
+                />
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      )}
+
       {/* Application settings */}
       <View style={styles.settingsSectionWrapper}>
         <Text style={styles.sectionHeader}>Application</Text>
@@ -265,11 +269,13 @@ function SettingsScreen() {
           )}
         </View>
       </View>
-      <View style={styles.footnoteWrapper}>
-        <Text style={commonStyles.footnote}>
-          Open App settings for Luma to set tracking preferences...
-        </Text>
-      </View>
+      {Platform.OS === 'ios' && (
+        <View style={styles.footnoteWrapper}>
+          <Text style={commonStyles.footnote}>
+            Open App settings for Luma to set tracking preferences...
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

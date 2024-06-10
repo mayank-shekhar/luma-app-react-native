@@ -1,4 +1,8 @@
-import {ExperienceEvent, Edge} from '@adobe/react-native-aepedge';
+import {
+  ExperienceEvent,
+  Edge,
+  EdgeEventHandle,
+} from '@adobe/react-native-aepedge';
 import {Consent} from '@adobe/react-native-aepedgeconsent';
 import {MobileCore, Identity} from '@adobe/react-native-aepcore';
 import {AppplicationStateType} from '../providers/StateProvider/StateProvider';
@@ -214,16 +218,45 @@ export class MobileSDK {
 
   public async sendTestPushEvent(applicationId: string, eventType: string) {
     // implementation
-    console.log(`Test push event: ${eventType}`);
+    console.log(`Test push event: ${eventType}, ${applicationId}`);
     const xdmData: Record<string, any> = {
-      eventType: `push.${eventType}`,
-      push: {
-        [eventType]: {
-          value: 1,
-        },
+      eventType: eventType,
+      application: {
+        id: applicationId,
       },
     };
-    const testPushEvent = new ExperienceEvent({xdmData: xdmData});
-    Edge.sendEvent(testPushEvent);
+    await this.sendExperienceEvent(xdmData);
+  }
+
+  public sendTrackAction(action: string, data: Record<string, any>) {
+    // implementation
+    console.log(`Track action: ${action}`);
+    MobileCore.trackAction(action, data);
+  }
+
+  public async sendExperienceEvent(xdm: Record<string, any>) {
+    // implementation
+    console.log(`Experience event: ${JSON.stringify(xdm)}`);
+    const experienceEvent = new ExperienceEvent({xdmData: xdm});
+    Edge.sendEvent(experienceEvent)
+      .then((handles: EdgeEventHandle[]) => {
+        console.log('Experience event sent');
+        handles.forEach(handle => {
+          console.log('Handle:', handle);
+          if (handle.payload) {
+            console.log('Payload:', handle.payload);
+            console.info(
+              'Mobile SDK - sendExperienceEvent - Success: Handle tyoe: ',
+              handle.type || '',
+            );
+          }
+        });
+      })
+      .catch((error: Error) => {
+        console.error(
+          'Mobile SDK - sendExperienceEvent - Error: ',
+          error.message || '',
+        );
+      });
   }
 }
