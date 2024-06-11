@@ -37,7 +37,7 @@ export class MobileSDK {
    */
   public sendTrackScreenEvent(screenName: string): void {
     // implementation
-    console.log(`Track screen event: ${screenName}`);
+    console.log(`\n Track screen event: ${screenName} \n`);
 
     const xdmData: Record<string, any> = {
       eventType: 'application.scene',
@@ -64,7 +64,7 @@ export class MobileSDK {
   public getConsents(): void {
     Consent.getConsents()
       .then(consents => {
-        console.log('Consents: ' + JSON.stringify(consents));
+        console.log('\n' + 'Consents: ' + JSON.stringify(consents) + '\n');
       })
       .catch(error => {
         console.log('Consents Error: ' + error);
@@ -77,7 +77,7 @@ export class MobileSDK {
    */
   public updateContent(value: 'y' | 'n'): void {
     // implementation
-    console.log(`Update content: ${value}`);
+    console.log(`\n Update content: ${value} \n`);
     const collectConsent = {collect: {value: value}};
     const currentConstent = {consents: collectConsent};
     Consent.update(currentConstent);
@@ -86,48 +86,40 @@ export class MobileSDK {
   }
 
   public async getIdentities(): Promise<string> {
-    console.log('Get identities');
     let newEcid = '';
     Identity.getExperienceCloudId()
       .then(ecid => {
-        console.log('AdobeExperienceSDK: ECID = ' + ecid);
         newEcid = ecid;
         this.dispatch(setEcid(newEcid));
       })
       .catch(error => {
-        console.log('AdobeExperienceSDK: getIdentities Error = ' + error);
+        console.error('AdobeExperienceSDK: getIdentities Error = ' + error);
       });
 
     // TODO: Need to revisit this code for geting and setting email id from identities
     EdgeIdentity.getIdentities()
       .then(identities => {
-        console.log(
-          'AdobeExperienceSDK: EdgeIdentity = ' + JSON.stringify(identities),
-        );
         const identityMap = identities.identityMap;
         const emailIdentity = identityMap?.Email;
         const crmIdentity = identityMap?.lumaCRMId;
         if (emailIdentity) {
           const currentEmail = emailIdentity[emailIdentity.length - 1].id;
-          console.log('Email: ' + currentEmail);
           this.dispatch(setEmail(currentEmail));
         }
         if (crmIdentity) {
           const currentCrmId = crmIdentity[crmIdentity.length - 1].id;
-          console.log('CRM ID: ' + currentCrmId);
           this.dispatch(setCrid(currentCrmId));
         }
       })
       .catch(error => {
-        console.log('AdobeExperienceSDK: EdgeIdentity Error = ' + error);
+        console.error('AdobeExperienceSDK: EdgeIdentity Error = ' + error);
       });
     return Promise.resolve(newEcid);
   }
 
   public updateIdentites(email: string, crmId: string): void {
     const identityMap = new IdentityMap();
-    console.log(`Update identities: ${email}, ${crmId}`);
-    console.log('IdentityMap: ' + JSON.stringify(identityMap));
+    console.log(`\n Update identities: ${email}, ${crmId} \n`);
 
     const emailIdentity = new IdentityItem(
       email,
@@ -145,7 +137,7 @@ export class MobileSDK {
 
   public sendAppInteractionEvent(actionName: string): void {
     // implementation
-    console.log(`App interaction event: ${actionName}`);
+    console.log(`\n App interaction event: ${actionName} \n`);
     const xdmData: Record<string, any> = {
       eventType: 'application.interaction',
       [this.configuration.config.tenant]: {
@@ -190,7 +182,7 @@ export class MobileSDK {
     product: Product,
   ) {
     // implementation
-    console.log(`Commerce experience event: ${commerceEventType}`);
+    console.log(`\n Commerce experience event: ${commerceEventType} \n`);
     const xdmData: Record<string, any> = {
       eventType: `commerce.${commerceEventType}`,
       commerce: {
@@ -218,7 +210,7 @@ export class MobileSDK {
 
   public async sendTestPushEvent(applicationId: string, eventType: string) {
     // implementation
-    console.log(`Test push event: ${eventType}, ${applicationId}`);
+    console.log(` \n Test push event: ${eventType}, ${applicationId} \n`);
     const xdmData: Record<string, any> = {
       eventType: eventType,
       application: {
@@ -230,27 +222,25 @@ export class MobileSDK {
 
   public sendTrackAction(action: string, data: Record<string, any>) {
     // implementation
-    console.log(`Track action: ${action}`);
+    console.log(`\n Track action: ${action} \n`);
     MobileCore.trackAction(action, data);
   }
 
   public async sendExperienceEvent(xdm: Record<string, any>) {
     // implementation
-    console.log(`Experience event: ${JSON.stringify(xdm)}`);
+    console.log(`\n Experience event: ${JSON.stringify(xdm)} \n`);
     const experienceEvent = new ExperienceEvent({xdmData: xdm});
     Edge.sendEvent(experienceEvent)
       .then((handles: EdgeEventHandle[]) => {
-        console.log('Experience event sent');
         handles.forEach(handle => {
-          console.log('Handle:', handle);
           if (handle.payload) {
-            console.log('Payload:', handle.payload);
             console.info(
               'Mobile SDK - sendExperienceEvent - Success: Handle tyoe: ',
               handle.type || '',
             );
           }
         });
+        r;
       })
       .catch((error: Error) => {
         console.error(

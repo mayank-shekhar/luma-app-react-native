@@ -41,7 +41,6 @@ export default function ApplicationNavigator() {
 
   const requestAppTrackingPermission = async () => {
     check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
-      console.log('oon checking ATT status:', result);
       setAppTTStatus(result);
       dispatch(setAppTrackingTransparencyStatus(result));
       if (result === RESULTS.GRANTED) {
@@ -52,7 +51,6 @@ export default function ApplicationNavigator() {
 
   const askForAppTrackingPermission = async () => {
     request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
-      console.log('on requesting ATT status:', result);
       dispatch(setAppTrackingTransparencyStatus(result));
       if (result === RESULTS.GRANTED) {
         setShowDisclaimer(false);
@@ -133,7 +131,6 @@ export default function ApplicationNavigator() {
   };
 
   const onSettingsTap = () => {
-    console.log('Settings clicked');
     dispatch(setConfigurationMode(!isConfigurationModeEnabled));
   };
 

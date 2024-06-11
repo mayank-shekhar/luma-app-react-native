@@ -25,7 +25,6 @@ export default function DataCollectionSection() {
   };
 
   const onEnvironmentFileIdChange = (text: string) => {
-    console.log('Environment File Id changed to:', text);
     if (isValidEnvironmentFileId(text)) {
       setIsEnvironmentFileIdValid(true);
       dispatch(setEnvironmentFileId(text));

@@ -1,13 +1,16 @@
 import * as React from 'react';
 import {AppState} from 'react-native';
-import {ActionType, setConfiguration} from '../../reducers/actions';
+import {
+  ActionType,
+  setConfiguration,
+  setDeviceToken,
+} from '../../reducers/actions';
 import {InitialAppState} from '../../reducers/reducer';
 import {MobileSDK} from '../../utils/MobileSDK';
 import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
-// import DeviceInfo from 'react-native-device-info';
+import DeviceInfo from 'react-native-device-info';
 import {PermissionStatus} from 'react-native-permissions';
-import logger from 'use-reducer-logger';
 
 export type AppplicationStateType = {
   isReady: boolean;
@@ -64,7 +67,7 @@ export type StateProviderProps = {
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
   const [config, setConfig] = React.useState<Configuration | null>(null);
-  const [state, dispatch] = React.useReducer(logger(reducer), initialState);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const fetchConfiguration = async () => {
     // Fetch configuration
@@ -77,15 +80,18 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
       setConfig(configuration);
       dispatch(setConfiguration(configuration));
     });
-    // DeviceInfo.getDeviceToken()
-    //   .then(deviceToken => {
-    //     // iOS: "a2Jqsd0kanz..."
-    //     dispatch(setDeviceToken(deviceToken));
-    //   })
-    //   .catch(err => {
-    //     console.error('Error getting device token:', err);
-    //     dispatch(setDeviceToken('Not physical device'));
-    //   });
+    DeviceInfo.getDeviceToken()
+      .then(deviceToken => {
+        // iOS: "a2Jqsd0kanz..."
+        if (deviceToken) {
+          console.info('Device token:', deviceToken);
+          dispatch(setDeviceToken(deviceToken));
+        }
+      })
+      .catch(err => {
+        console.error('Error getting device token:', err);
+        // dispatch(setDeviceToken('Not physical device'));
+      });
   }, []);
   const MobileSDKInstance = React.useMemo(() => {
     return new MobileSDK(state, dispatch, config as Configuration);

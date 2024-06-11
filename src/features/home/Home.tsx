@@ -50,7 +50,6 @@ function RootHomeScreen() {
     navigation: any,
   ) => {
     const onLoginIconPress = () => {
-      console.log('Login icon pressed');
       navigation.navigation.navigate('LoginModal');
     };
     return (

@@ -46,11 +46,10 @@ function IdentitiesList() {
     dispatch(setCrid('112ca06ed53d3db37e4cea49cc45b71e'));
     Identity.getExperienceCloudId()
       .then(ecid => {
-        console.log('AdobeExperienceSDK: ECID = ' + ecid);
         dispatch(setEcid(ecid));
       })
       .catch(error =>
-        console.log(
+        console.error(
           'AdobeExperienceSDK: getExperienceCloudId Error = ' + error,
         ),
       );

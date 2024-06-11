@@ -22,7 +22,6 @@ export const ActionTypes = {
 };
 
 export function setEcid(ecid: string): ActionType {
-  console.log('Action: setEcid: ==== :', ecid);
   return {
     type: ActionTypes.SET_ECID,
     payload: ecid,

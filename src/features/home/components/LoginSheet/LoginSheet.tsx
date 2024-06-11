@@ -70,7 +70,6 @@ export default function LoginSheet({navigation}: {navigation: any}) {
 
   const onLogoutButtonClick = (): void => {
     mobileSDK.removeIdentities(currentEmail, currentCrmId).then(() => {
-      console.log('Identities removed');
       setDisableLogin(false);
       dispatch(setEmail('testUser@gmail.com'));
       dispatch(setCrid('112ca06ed53d3db37e4cea49cc45b71e'));

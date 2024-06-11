@@ -18,7 +18,6 @@ export default function ConfigurationLocationSection() {
   } = useAppState();
 
   const onConfigLocationChange = (text: string) => {
-    console.log('Config location changed to:', text);
     dispatch(setConfigLocation(text));
     raiseRestartAlert();
   };

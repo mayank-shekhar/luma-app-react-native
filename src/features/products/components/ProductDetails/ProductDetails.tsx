@@ -32,7 +32,6 @@ const ProductDetails = ({_navigation, route}: any) => {
   const processATT = async () => {
     check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
       if (result === RESULTS.GRANTED) {
-        console.log('ATT granted');
         mobileSDK.sendCommerceExperienceEvent('productViews', product);
       }
     });

@@ -1,4 +1,4 @@
-package com.lumaappreactnative
+package com.adobe.luma.tutorial.reactnative
 
 import android.app.Application
 import android.util.Log

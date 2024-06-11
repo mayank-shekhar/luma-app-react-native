@@ -1,4 +1,4 @@
-package com.lumaappreactnative
+package com.adobe.luma.tutorial.reactnative
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
