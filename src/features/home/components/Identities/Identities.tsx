@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Platform} from 'react-native';
 
 import styles from './Identities.styles';
 import {CustomFlatList, DataItemType} from '../../../../components';
@@ -83,11 +83,13 @@ function IdentitiesList() {
     <View style={styles.wrapper}>
       <Text style={[styles.header, {color: colors.text}]}>Identities</Text>
       <CustomFlatList data={identitiesData} />
-      <Text style={[styles.footnote, {color: colors.text, opacity: 0.6}]}>
-        {email === 'testUser@gmail.com'
-          ? 'If tracking is allowed, use the Person button to login using a new or existing email address...'
-          : 'Reinstall the app to login using a different email address…'}
-      </Text>
+      {Platform.OS === 'ios' && (
+        <Text style={[styles.footnote, {color: colors.text, opacity: 0.6}]}>
+          {email === 'testUser@gmail.com'
+            ? 'If tracking is allowed, use the Person button to login using a new or existing email address...'
+            : 'Reinstall the app to login using a different email address…'}
+        </Text>
+      )}
     </View>
   );
 }

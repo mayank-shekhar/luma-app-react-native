@@ -5,7 +5,7 @@ import {MobileCore} from '@adobe/react-native-aepcore';
 import {ApplicationNavigator} from './navigation/containers';
 import {StateProvider} from './providers';
 import appReducer, {InitialAppState} from './reducers/reducer';
-import {Alert, PermissionsAndroid, Platform} from 'react-native';
+import {Alert, PermissionsAndroid, Platform, StatusBar} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import {useDispatch} from './hooks';
 import {setDeviceToken} from './reducers/actions';
@@ -13,6 +13,7 @@ import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
+  useTheme,
 } from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
 import {Assurance} from '@adobe/react-native-aepassurance';
@@ -81,7 +82,21 @@ function App() {
     );
   }, []);
 
-  return <ApplicationNavigator />;
+  const {colors} = useTheme();
+  const scheme = useColorScheme();
+
+  return (
+    <>
+      <StatusBar
+        animated={true}
+        backgroundColor={colors.background}
+        barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+        showHideTransition={'fade'}
+        hidden={false}
+      />
+      <ApplicationNavigator />
+    </>
+  );
 }
 
 const AppDeepLinking = {
@@ -102,6 +117,7 @@ function ApplicationWithProviders() {
     //   'lumareactnative://?adb_validation_sessionid=9cde3fc9-23c7-47c8-a9e9-33a86eadc3c3',
     // );
   }, []);
+
   return (
     <StateProvider reducer={appReducer} initialState={InitialAppState}>
       <NavigationContainer

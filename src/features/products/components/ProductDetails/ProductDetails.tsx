@@ -105,7 +105,7 @@ const ProductDetails = ({_navigation, route}: any) => {
                   ProductDetailsStyle.productSizeText,
                   {color: isDarkMode ? '#000' : '#fff'},
                 ]}>
-                {product.size}
+                {product.size || 'N/A'}
               </Text>
             </View>
           </View>

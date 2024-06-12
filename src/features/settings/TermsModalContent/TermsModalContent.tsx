@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
-import {View, Text, Modal, Button} from 'react-native';
+import {useTheme} from '@react-navigation/native';
+import React from 'react';
+import {View, Text, Pressable, Platform} from 'react-native';
 import {WebView} from 'react-native-webview';
+import CommonStyles from '../../../styles/common.styles';
 
 export type TermsModalContentProps = {
   onClose?: () => void;
 };
 
 const TermsModalContent = (props: TermsModalContentProps) => {
+  const {colors} = useTheme();
+  const commonStyles = CommonStyles(colors);
   return (
     <View
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: colors.card,
         padding: 25,
-        marginTop: 75,
+        marginTop: 0,
         flex: 1,
-        borderRadius: 20,
-        shadowColor: '#000',
+        borderRadius: Platform.OS === 'android' ? 0 : 20,
         shadowOffset: {
           width: 0,
           height: 2,
@@ -23,8 +26,10 @@ const TermsModalContent = (props: TermsModalContentProps) => {
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
       }}>
-      <View style={{alignItems: 'flex-start'}}>
-        <Button title="Close" onPress={props.onClose} />
+      <View style={{alignItems: 'flex-end', marginBottom: 20}}>
+        <Pressable onPress={props.onClose} style={commonStyles.buttonWrapper}>
+          <Text>Close</Text>
+        </Pressable>
       </View>
 
       <WebView
@@ -39,6 +44,8 @@ const TermsModalContent = (props: TermsModalContentProps) => {
                 font-family: "Avenir", sans-serif;
                 font-size: 16px;
                 padding: 15px 15px;
+                background-color: ${colors.background};
+                color: ${colors.text}
             }
             a {
                 color: purple;
