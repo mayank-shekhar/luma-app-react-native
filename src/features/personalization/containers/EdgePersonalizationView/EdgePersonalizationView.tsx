@@ -40,7 +40,6 @@ export default function EdgePersonalizationView() {
         <FullScreenLoader />
       ) : (
         <>
-          <Text>Edge Personalization View {colors.text}</Text>
           {decisions.map(decision => {
             return (
               <EdgeOffersView key={decision.activityId} decision={decision} />

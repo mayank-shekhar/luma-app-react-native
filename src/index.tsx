@@ -15,6 +15,7 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
+import {Assurance} from '@adobe/react-native-aepassurance';
 
 async function requestUserPermission(): Promise<boolean> {
   try {
@@ -23,9 +24,11 @@ async function requestUserPermission(): Promise<boolean> {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    // if (enabled) {
-    //   console.log('Authorization status:', authStatus);
-    // }
+    if (enabled) {
+      console.log(
+        `\n Push notification Authorization status: ${authStatus} \n`,
+      );
+    }
     return Promise.resolve(enabled);
   } catch (e) {
     // console.error('Failed to request push notification permission:', e);
@@ -60,7 +63,8 @@ function App() {
       Alert.alert('Failed to request push notification permission');
     }
     const token = await registerForPushNotifications();
-    // console.log('Push notification token:', token);
+    console.log('\n' + 'Push notification token:', token + '\n');
+    MobileCore.setPushIdentifier(token);
     dispatch(setDeviceToken(token));
   };
   useEffect(() => {
@@ -80,11 +84,28 @@ function App() {
   return <ApplicationNavigator />;
 }
 
+const AppDeepLinking = {
+  prefixes: ['https://www.lumareactnative.com', 'lumareactnative://'],
+  config: {
+    screens: {
+      Home: 'home',
+      Products: 'products',
+    },
+  },
+};
+
 function ApplicationWithProviders() {
   const scheme = useColorScheme();
+  useEffect(() => {
+    Assurance.startSession(
+      'lumareactnative://?adb_validation_sessionid=9cde3fc9-23c7-47c8-a9e9-33a86eadc3c3',
+    );
+  }, []);
   return (
     <StateProvider reducer={appReducer} initialState={InitialAppState}>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <NavigationContainer
+        linking={AppDeepLinking}
+        theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         <App />
       </NavigationContainer>
     </StateProvider>

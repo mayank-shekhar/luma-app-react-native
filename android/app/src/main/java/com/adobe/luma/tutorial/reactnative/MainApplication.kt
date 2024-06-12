@@ -5,6 +5,7 @@ import android.util.Log
 //import com.adobe.marketing.mobile.AdobeCallback;
 import com.adobe.marketing.mobile.Assurance;
 import com.adobe.marketing.mobile.Edge;
+import com.adobe.marketing.mobile.Messaging;
 //import com.adobe.marketing.mobile.Identity;
 //import com.adobe.marketing.mobile.InvalidInitException;
 import com.adobe.marketing.mobile.Lifecycle;
@@ -13,6 +14,7 @@ import com.adobe.marketing.mobile.MobileCore;
 import com.adobe.marketing.mobile.Signal;
 import com.adobe.marketing.mobile.UserProfile;
 import com.adobe.marketing.mobile.edge.consent.Consent;
+import com.adobe.marketing.mobile.optimize.Optimize;
 //import com.adobe.marketing.mobile.edge.identity.Identity;
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -56,9 +58,18 @@ class MainApplication : Application(), ReactApplication {
     // SDK
     MobileCore.setApplication(this)
     MobileCore.setLogLevel(LoggingMode.DEBUG)
-    MobileCore.configureWithAppID("3149c49c3910/7f6d22873d0d/launch-62375a272e8b-development")
+    // MobileCore.configureWithAppID("3149c49c3910/7f6d22873d0d/launch-62375a272e8b-development")
+//     MobileCore.configureWithAppID("bf7248f92b53/e1048832e7d6/launch-cf1d310fbda7")
+    // bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development
+
+//    MobileCore.configureWithAppID("bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development")
+    MobileCore.configureWithAppID("bf7248f92b53/9c21d9ace637/launch-606018f3d351-development")
+    MobileCore.updateConfiguration(mapOf(
+      "messaging.useSandbox" to true,
+    ))
 
     val extensions = Arrays.asList(
+      Messaging.EXTENSION,
       Assurance.EXTENSION,
       Lifecycle.EXTENSION,
       Signal.EXTENSION,
@@ -66,7 +77,8 @@ class MainApplication : Application(), ReactApplication {
       com.adobe.marketing.mobile.Identity.EXTENSION,
       Consent.EXTENSION,
       UserProfile.EXTENSION,
-      com.adobe.marketing.mobile.edge.identity.Identity.EXTENSION
+      com.adobe.marketing.mobile.edge.identity.Identity.EXTENSION,
+      Optimize.EXTENSION
     )
     MobileCore.registerExtensions(extensions) { o: Any? ->
       MobileCore.lifecycleStart(null)

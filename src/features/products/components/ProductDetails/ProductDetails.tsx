@@ -14,7 +14,7 @@ import {
   sanitizeProductCategory,
   numToTwoDecimals,
 } from '../../../../utils/stringModifiers';
-import {useTheme} from '@react-navigation/native';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 import ProductDetailsStyle from './ProductDetails.style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useMobileSDK} from '../../../../hooks';
@@ -28,22 +28,23 @@ const ProductDetails = ({_navigation, route}: any) => {
   const isDarkMode = colorsScheme === 'dark';
   const product = route.params.product as Product;
 
-  // process iOS app tracking transparency
-  const processATT = async () => {
+  const checkAttAndSendCommerceEvent = async (eventType: string) => {
     check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
       if (result === RESULTS.GRANTED) {
-        mobileSDK.sendCommerceExperienceEvent('productViews', product);
+        mobileSDK.sendCommerceExperienceEvent(eventType, product);
       }
     });
   };
 
-  React.useEffect(() => {
-    // sdk events
-    mobileSDK.sendTrackScreenEvent(
-      `rn luma: content: ${Platform.OS}: us: en: product`,
-    );
-    processATT();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      // sdk events
+      mobileSDK.sendTrackScreenEvent(
+        `rn luma: content: ${Platform.OS}: us: en: product`,
+      );
+      checkAttAndSendCommerceEvent('productViews');
+    }, []),
+  );
 
   return (
     <ScrollView>

@@ -180,13 +180,13 @@ export default function ApplicationNavigator() {
                 getTabBarIcon('personalisation', props),
             }}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name="Location"
             component={LocationScreen}
             options={{
               tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
             }}
-          />
+          /> */}
           <Tab.Screen
             name="Settings"
             component={SettingsScreen}

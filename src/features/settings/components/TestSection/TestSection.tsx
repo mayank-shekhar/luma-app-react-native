@@ -7,7 +7,7 @@ import {
   SwitchChangeEvent,
   Platform,
 } from 'react-native';
-
+import {Messaging} from '@adobe/react-native-aepmessaging';
 import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
 import {useAppState, useDispatch, useMobileSDK} from '../../../../hooks';
@@ -36,8 +36,12 @@ export default function TestSection() {
     dispatch(setTestProfileEnabled(event.nativeEvent.value));
     mobileSDK.sendTrackAction('updateTestProfile', {
       ecid: ecid,
-      testProfile: event.nativeEvent.value,
+      testProfile: event.nativeEvent.value.toString(),
     });
+  };
+
+  const onTestInAppNotificationClick = () => {
+    mobileSDK.sendTrackAction('in-app', {showMessage: 'true'});
   };
 
   return (
@@ -59,7 +63,10 @@ export default function TestSection() {
         </View>
         <View style={styles.testSection}>
           <View style={styles.buttonWrapepr}>
-            <Button title="In-App Message" />
+            <Button
+              onPress={onTestInAppNotificationClick}
+              title="In-App Message"
+            />
           </View>
           <View style={styles.buttonWrapepr}>
             <Button

@@ -220,10 +220,10 @@ export class MobileSDK {
     await this.sendExperienceEvent(xdmData);
   }
 
-  public sendTrackAction(action: string, data: Record<string, any>) {
+  public sendTrackAction(action: string, contextData: Record<string, string>) {
     // implementation
     console.log(`\n Track action: ${action} \n`);
-    MobileCore.trackAction(action, data);
+    MobileCore.trackAction(action, contextData);
   }
 
   public async sendExperienceEvent(xdm: Record<string, any>) {
@@ -240,7 +240,6 @@ export class MobileSDK {
             );
           }
         });
-        r;
       })
       .catch((error: Error) => {
         console.error(

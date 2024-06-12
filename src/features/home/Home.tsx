@@ -8,21 +8,31 @@ import {useMobileSDK} from '../../hooks';
 import LoginSheet from './components/LoginSheet/LoginSheet';
 import {HeaderButtonProps} from '../../types';
 import {useFocusEffect} from '@react-navigation/native';
+import {Messaging} from '@adobe/react-native-aepmessaging';
 
 function HomeScreen() {
   const mobileSDK = useMobileSDK();
+  const getLatestMessage = async () => {
+    const message = await Messaging.getLatestMessage();
+    console.log('Latest Message:', message);
+  };
+  const refreshInAppMessages = () => {
+    Messaging.refreshInAppMessages();
+    console.log('messages refreshed');
+  };
   useFocusEffect(
     React.useCallback(() => {
+      mobileSDK.getIdentities();
       mobileSDK.getConsents();
       mobileSDK.sendTrackScreenEvent(
         `rn luma: content: ${Platform.OS}: us: en: home`,
       );
+
+      getLatestMessage();
+      refreshInAppMessages();
     }, []),
   );
 
-  // React.useEffect(() => {
-
-  // }, []);
   return (
     <View style={{flex: 1, flexDirection: 'column', marginTop: 20}}>
       <ApplicationHero />
