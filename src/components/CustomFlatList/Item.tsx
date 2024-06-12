@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 15,
+    paddingVertical: 16,
     marginHorizontal: 20,
     borderBottomWidth: 0,
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: '700',
   },
 });

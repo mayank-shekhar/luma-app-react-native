@@ -1,4 +1,12 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
+
+const androidStyles = {
+  listContainer: {
+    borderRadius: 16,
+  },
+};
+
+const isAndroid = Platform.OS === 'android';
 
 export default StyleSheet.create({
   listContainer: {
@@ -6,5 +14,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     borderRadius: 10,
+    ...(isAndroid && androidStyles.listContainer),
   },
 });

@@ -17,13 +17,13 @@ export const InitialAppState: AppplicationStateType = {
   },
   config: {
     environmentFileId:
-      'bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development',
+      'bf7248f92b53/9c21d9ace637/launch-606018f3d351-development',
     configurationLocation: '',
     appConfig: undefined,
     appTrackingTransparencyStatus: 'unavailable',
     deviceToken: '',
     deviceId: '',
-    isConfigurationModeEnabled: true,
+    isConfigurationModeEnabled: false,
     isTestProfileEnabled: false,
   },
 };

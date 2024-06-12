@@ -1,11 +1,38 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Theme} from '../../types';
+
+const isAndroid = Platform.OS === 'android';
+
+const androidStyles = {
+  wrapper: {
+    padding: 0,
+  },
+  sectionHeader: {
+    fontWeight: '500',
+    textTransform: 'capitalize',
+    opacity: 0.7,
+  },
+  testSection: {
+    paddingVertical: 16,
+    paddingHorizontal: 0,
+    marginHorizontal: 20,
+  },
+  testProfileSection: {
+    paddingVertical: 16,
+    paddingHorizontal: 0,
+    marginHorizontal: 20,
+  },
+  settingsListItem: {
+    borderBottomWidth: 0,
+  },
+};
 
 export default function SettingsStyles(colors: Theme['colors']) {
   return StyleSheet.create({
     wrapper: {
       flex: 1,
       padding: 20,
+      ...(isAndroid && androidStyles.wrapper),
     },
 
     header: {
@@ -25,6 +52,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
       color: colors.text,
       opacity: 0.5,
       paddingLeft: 24,
+      ...(isAndroid && androidStyles.sectionHeader),
     },
     sectionContainer: {
       backgroundColor: colors.card,
@@ -39,10 +67,12 @@ export default function SettingsStyles(colors: Theme['colors']) {
       justifyContent: 'space-between',
       alignItems: 'center',
       alignContent: 'center',
+      ...(isAndroid && androidStyles.testSection),
     },
     testProfileSection: {
       borderBottomColor: colors.border,
       borderBottomWidth: 1,
+      ...(isAndroid && androidStyles.testProfileSection),
     },
     buttonWrapepr: {
       backgroundColor: colors.background,
@@ -51,7 +81,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
       fontSize: 11,
     },
     textNote: {
-      fontSize: 14,
+      fontSize: 16,
     },
     settingsListItem: {
       flexDirection: 'row',
@@ -62,6 +92,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
       borderBottomWidth: 1,
       borderBottomColor: colors.border,
       alignItems: 'center',
+      ...(isAndroid && androidStyles.settingsListItem),
     },
     footnoteWrapper: {
       paddingHorizontal: 20,

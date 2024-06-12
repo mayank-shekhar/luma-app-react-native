@@ -1,10 +1,22 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
+
+const androidStyles = {
+  wrapper: {
+    padding: 0,
+  },
+  listContainer: {
+    borderRadius: 16,
+  },
+};
+
+const isAndroid = Platform.OS === 'android';
 
 export default StyleSheet.create({
   wrapper: {
     flex: 1,
     padding: 20,
-    marginTop: 30,
+    marginTop: 20,
+    ...(isAndroid && androidStyles.wrapper),
   },
 
   header: {

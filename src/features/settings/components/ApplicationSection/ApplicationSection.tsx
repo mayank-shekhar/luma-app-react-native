@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {useAppState} from '../../../../hooks';
-import {View, Text, Button, Platform} from 'react-native';
+import {View, Text, Button, Platform, Pressable} from 'react-native';
 import {RESULTS} from 'react-native-permissions';
-import commonStyles from '../../../../styles/common.styles';
+import CommonStyles from '../../../../styles/common.styles';
 import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
 
@@ -17,6 +17,7 @@ export default function ApplicationSection({
   const {
     config: {appTrackingTransparencyStatus},
   } = useAppState();
+  const commonStyles = CommonStyles(colors);
   return (
     <>
       <View style={styles.settingsSectionWrapper}>
@@ -24,9 +25,11 @@ export default function ApplicationSection({
         <View style={styles.sectionContainer}>
           <View style={styles.settingsListItem}>
             <Text style={styles.textNote}>Terms of use</Text>
-            <View style={styles.buttonWrapepr}>
-              <Button title="View" onPress={() => setTermsModalVisible(true)} />
-            </View>
+            <Pressable
+              onPress={() => setTermsModalVisible(true)}
+              style={commonStyles.buttonWrapper}>
+              <Text>View</Text>
+            </Pressable>
           </View>
           {Platform.OS === 'ios' && (
             <View style={styles.settingsListItem}>
@@ -42,9 +45,9 @@ export default function ApplicationSection({
                 ]}>
                 Tracking is allowed...
               </Text>
-              <View style={styles.buttonWrapepr}>
+              <Pressable style={commonStyles.buttonWrapper}>
                 <Button title="App settings" />
-              </View>
+              </Pressable>
             </View>
           )}
         </View>

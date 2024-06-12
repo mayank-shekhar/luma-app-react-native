@@ -97,9 +97,10 @@ const AppDeepLinking = {
 function ApplicationWithProviders() {
   const scheme = useColorScheme();
   useEffect(() => {
-    Assurance.startSession(
-      'lumareactnative://?adb_validation_sessionid=9cde3fc9-23c7-47c8-a9e9-33a86eadc3c3',
-    );
+    MobileCore.updateConfiguration({'messaging.useSandbox': true});
+    // Assurance.startSession(
+    //   'lumareactnative://?adb_validation_sessionid=9cde3fc9-23c7-47c8-a9e9-33a86eadc3c3',
+    // );
   }, []);
   return (
     <StateProvider reducer={appReducer} initialState={InitialAppState}>

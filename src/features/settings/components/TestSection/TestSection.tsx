@@ -6,16 +6,19 @@ import {
   Button,
   SwitchChangeEvent,
   Platform,
+  Pressable,
 } from 'react-native';
-import {Messaging} from '@adobe/react-native-aepmessaging';
+// import {Messaging} from '@adobe/react-native-aepmessaging';
 import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
 import {useAppState, useDispatch, useMobileSDK} from '../../../../hooks';
 import DeviceInfo from 'react-native-device-info';
 import {setTestProfileEnabled} from '../../../../reducers/actions';
+import CommonStyles from '../../../../styles/common.styles';
 
 export default function TestSection() {
   const {colors} = useTheme();
+  const commonStyles = CommonStyles(colors);
   const styles = SettingsStyles(colors);
   const mobileSDK = useMobileSDK();
   const {
@@ -62,18 +65,16 @@ export default function TestSection() {
           </View>
         </View>
         <View style={styles.testSection}>
-          <View style={styles.buttonWrapepr}>
-            <Button
-              onPress={onTestInAppNotificationClick}
-              title="In-App Message"
-            />
-          </View>
-          <View style={styles.buttonWrapepr}>
-            <Button
-              onPress={onDeliverPushNotificationClick}
-              title="Push Notification"
-            />
-          </View>
+          <Pressable
+            style={commonStyles.buttonWrapper}
+            onPress={onTestInAppNotificationClick}>
+            <Text>In-App Message</Text>
+          </Pressable>
+          <Pressable
+            style={commonStyles.buttonWrapper}
+            onPress={onDeliverPushNotificationClick}>
+            <Text>Push Notification</Text>
+          </Pressable>
         </View>
       </View>
     </View>

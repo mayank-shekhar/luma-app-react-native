@@ -2,13 +2,14 @@ import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import SettingsStyles from '../../Settings.styles';
 import {View, Text, TextInput, Alert} from 'react-native';
-import commonStyles from '../../../../styles/common.styles';
+import CommonStyles from '../../../../styles/common.styles';
 import {useAppState, useDispatch} from '../../../../hooks';
 import {isValidEnvironmentFileId} from '../../../../utils/stringModifiers';
 import {setEnvironmentFileId} from '../../../../reducers/actions';
 
 export default function DataCollectionSection() {
   const {colors} = useTheme();
+  const commonStyles = CommonStyles(colors);
   const [isEnvironmentFileIdValid, setIsEnvironmentFileIdValid] =
     React.useState(true);
   const styles = SettingsStyles(colors);

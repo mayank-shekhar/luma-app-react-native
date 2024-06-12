@@ -64,9 +64,9 @@ class MainApplication : Application(), ReactApplication {
 
 //    MobileCore.configureWithAppID("bf7248f92b53/e1048832e7d6/launch-41a6b2bb04da-development")
     MobileCore.configureWithAppID("bf7248f92b53/9c21d9ace637/launch-606018f3d351-development")
-    MobileCore.updateConfiguration(mapOf(
-      "messaging.useSandbox" to true,
-    ))
+//    MobileCore.updateConfiguration(mapOf(
+//      "messaging.useSandbox" to true,
+//    ))
 
     val extensions = Arrays.asList(
       Messaging.EXTENSION,

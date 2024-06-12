@@ -3,14 +3,15 @@ import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
 import {View, Text, TextInput, ScrollView, Alert} from 'react-native';
 import {AccordionItem} from '../../../../components';
-import commonStyles from '../../../../styles/common.styles';
-import {useAppState, useDispatch, useMobileSDK} from '../../../../hooks';
+import CommonStyles from '../../../../styles/common.styles';
+import {useAppState, useDispatch} from '../../../../hooks';
 import {setConfigLocation} from '../../../../reducers/actions';
 
 export default function ConfigurationLocationSection() {
   const {colors} = useTheme();
   const styles = SettingsStyles(colors);
   const dispatch = useDispatch();
+  const commonStyles = CommonStyles(colors);
 
   // const mobileSDK = useMobileSDK();
   const {
