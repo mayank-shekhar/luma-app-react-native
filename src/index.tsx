@@ -16,7 +16,7 @@ import {
   useTheme,
 } from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
-import {Assurance} from '@adobe/react-native-aepassurance';
+// import {Assurance} from '@adobe/react-native-aepassurance';
 
 async function requestUserPermission(): Promise<boolean> {
   try {

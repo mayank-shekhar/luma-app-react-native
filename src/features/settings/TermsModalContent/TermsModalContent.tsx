@@ -3,6 +3,7 @@ import React from 'react';
 import {View, Text, Pressable, Platform} from 'react-native';
 import {WebView} from 'react-native-webview';
 import CommonStyles from '../../../styles/common.styles';
+import {PlatformButton} from '../../../components';
 
 export type TermsModalContentProps = {
   onClose?: () => void;
@@ -27,9 +28,11 @@ const TermsModalContent = (props: TermsModalContentProps) => {
         shadowRadius: 3.84,
       }}>
       <View style={{alignItems: 'flex-end', marginBottom: 20}}>
-        <Pressable onPress={props.onClose} style={commonStyles.buttonWrapper}>
-          <Text>Close</Text>
-        </Pressable>
+        <PlatformButton
+          label="Close"
+          onPress={props.onClose}
+          variant="secondary"
+        />
       </View>
 
       <WebView

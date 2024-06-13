@@ -1,28 +1,22 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Switch,
-  Button,
-  SwitchChangeEvent,
-  Platform,
-  Pressable,
-} from 'react-native';
-// import {Messaging} from '@adobe/react-native-aepmessaging';
+import {View, Text, Switch, SwitchChangeEvent, Platform} from 'react-native';
 import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
 import {useAppState, useDispatch, useMobileSDK} from '../../../../hooks';
 import DeviceInfo from 'react-native-device-info';
 import {setTestProfileEnabled} from '../../../../reducers/actions';
-import CommonStyles from '../../../../styles/common.styles';
+import {PlatformButton} from '../../../../components';
 
 export default function TestSection() {
   const {colors} = useTheme();
-  const commonStyles = CommonStyles(colors);
   const styles = SettingsStyles(colors);
   const mobileSDK = useMobileSDK();
   const {
-    config: {isTestProfileEnabled, appTrackingTransparencyStatus},
+    config: {
+      isTestProfileEnabled,
+      appTrackingTransparencyStatus,
+      isConfigurationModeEnabled,
+    },
     home: {
       identities: {ecid},
     },
@@ -51,30 +45,30 @@ export default function TestSection() {
     <View style={styles.settingsSectionWrapper}>
       <Text style={styles.sectionHeader}>Test</Text>
       <View style={styles.sectionContainer}>
-        <View style={[styles.testSection, {...styles.testProfileSection}]}>
-          <Text>Test Profile</Text>
-          <View>
-            <Switch
-              disabled={
-                Platform.OS === 'ios' &&
-                appTrackingTransparencyStatus !== 'granted'
-              }
-              onChange={onTestProfileSwitchClick}
-              value={isTestProfileEnabled}
-            />
+        {isConfigurationModeEnabled && (
+          <View style={[styles.testSection, {...styles.testProfileSection}]}>
+            <Text>Test Profile</Text>
+            <View>
+              <Switch
+                disabled={
+                  Platform.OS === 'ios' &&
+                  appTrackingTransparencyStatus !== 'granted'
+                }
+                onChange={onTestProfileSwitchClick}
+                value={isTestProfileEnabled}
+              />
+            </View>
           </View>
-        </View>
+        )}
         <View style={styles.testSection}>
-          <Pressable
-            style={commonStyles.buttonWrapper}
-            onPress={onTestInAppNotificationClick}>
-            <Text>In-App Message</Text>
-          </Pressable>
-          <Pressable
-            style={commonStyles.buttonWrapper}
-            onPress={onDeliverPushNotificationClick}>
-            <Text>Push Notification</Text>
-          </Pressable>
+          <PlatformButton
+            onPress={onTestInAppNotificationClick}
+            label="In-App Message"
+          />
+          <PlatformButton
+            onPress={onDeliverPushNotificationClick}
+            label="Push Notification"
+          />
         </View>
       </View>
     </View>

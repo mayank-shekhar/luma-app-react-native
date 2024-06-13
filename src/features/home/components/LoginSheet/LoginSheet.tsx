@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useMobileSDK, useAppState, useDispatch} from '../../../../hooks';
-import {View, Text, Button, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {Platform} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 import LoginSheetStyles from './LoginSheet.styles';
 import {v4 as uuidv4} from 'uuid';
 import {getRandomInt} from '../../../../utils/numberUtils';
 import {setCrid, setEmail} from '../../../../reducers/actions';
+import {PlatformButton} from '../../../../components/index.ts';
 
 export default function LoginSheet({navigation}: {navigation: any}) {
   const {colors} = useTheme();
@@ -89,12 +90,7 @@ export default function LoginSheet({navigation}: {navigation: any}) {
         ]}>
         {disableLogin ? (
           <View>
-            <View
-              style={{
-                paddingVertical: 15,
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-              }}>
+            <View style={LoginSheetStyles.inputViewWrapper}>
               <Text style={{marginBottom: 10}}>
                 You are identified with email address
               </Text>
@@ -102,13 +98,7 @@ export default function LoginSheet({navigation}: {navigation: any}) {
                 {currentEmail}
               </Text>
             </View>
-            <View
-              style={{
-                paddingVertical: 15,
-                borderBottomColor: '#ccc',
-                borderBottomWidth: 1,
-                marginBottom: 20,
-              }}>
+            <View style={LoginSheetStyles.inputViewWrapper}>
               <Text style={{marginBottom: 10}}>
                 You are identified with CRM ID
               </Text>
@@ -117,8 +107,15 @@ export default function LoginSheet({navigation}: {navigation: any}) {
               </Text>
             </View>
             <View style={LoginSheetStyles.formActions}>
-              <Button onPress={onLogoutButtonClick} title="Logout" />
-              <Button onPress={() => navigation.goBack()} title="Done" />
+              <PlatformButton
+                onPress={onLogoutButtonClick}
+                label="Logout"
+                variant="secondary"
+              />
+              <PlatformButton
+                onPress={() => navigation.goBack()}
+                label="Done"
+              />
             </View>
           </View>
         ) : (
@@ -138,8 +135,8 @@ export default function LoginSheet({navigation}: {navigation: any}) {
               />
             </View>
             <View style={LoginSheetStyles.formActions}>
-              <Button onPress={onAutoButtonClick} title="Auto" />
-              <Button onPress={onLoginButtonClick} title="Login" />
+              <PlatformButton onPress={onAutoButtonClick} label="Auto" />
+              <PlatformButton onPress={onLoginButtonClick} label="Login" />
             </View>
           </>
         )}

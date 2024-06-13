@@ -3,13 +3,6 @@ import {Theme} from '../types';
 
 const isAndroid = Platform.OS === 'android';
 
-// const androidStyles = {
-//   buttonWrapper: {
-//     backgroundColor: 'transparent',
-//     textTransform: 'capitalize',
-//   },
-// };
-
 function androidStyles(colors: Theme['colors']) {
   return {
     buttonWrapper: {
@@ -20,19 +13,13 @@ function androidStyles(colors: Theme['colors']) {
   };
 }
 
-// const iOSStyles = {
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#f0f0f0',
-//   },
-// };
-
 export default function CommonStyles(colors: Theme['colors']) {
   return StyleSheet.create({
     footnote: {
       fontSize: 14,
       color: colors.text,
       paddingVertical: 10,
+      opacity: 0.5,
     },
     buttonWrapper: {
       paddingVertical: 10,

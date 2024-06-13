@@ -2,10 +2,11 @@ import React from 'react';
 
 import {useAppState} from '../../../../hooks';
 import {View, Text, Button, Platform, Pressable} from 'react-native';
-import {RESULTS} from 'react-native-permissions';
+import {RESULTS, openSettings} from 'react-native-permissions';
 import CommonStyles from '../../../../styles/common.styles';
 import SettingsStyles from '../../Settings.styles';
 import {useTheme} from '@react-navigation/native';
+import {PlatformButton} from '../../../../components';
 
 export default function ApplicationSection({
   setTermsModalVisible,
@@ -25,14 +26,13 @@ export default function ApplicationSection({
         <View style={styles.sectionContainer}>
           <View style={styles.settingsListItem}>
             <Text style={styles.textNote}>Terms of use</Text>
-            <Pressable
+            <PlatformButton
+              label="View"
               onPress={() => setTermsModalVisible(true)}
-              style={commonStyles.buttonWrapper}>
-              <Text>View</Text>
-            </Pressable>
+            />
           </View>
           {Platform.OS === 'ios' && (
-            <View style={styles.settingsListItem}>
+            <View style={[styles.settingsListItem, {borderBottomWidth: 0}]}>
               <Text
                 style={[
                   styles.textNote,
@@ -45,9 +45,7 @@ export default function ApplicationSection({
                 ]}>
                 Tracking is allowed...
               </Text>
-              <Pressable style={commonStyles.buttonWrapper}>
-                <Button title="App settings" />
-              </Pressable>
+              <PlatformButton label="App settings" onPress={openSettings} />
             </View>
           )}
         </View>

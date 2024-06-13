@@ -26,7 +26,6 @@ function SettingsScreen() {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.info('Settings screen focused...');
       mobileSDK.sendTrackScreenEvent(
         `luma: content: ${Platform.OS}: us: en: config`,
       );

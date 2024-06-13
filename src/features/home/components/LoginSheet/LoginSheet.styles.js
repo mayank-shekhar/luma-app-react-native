@@ -6,6 +6,11 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 40,
   },
+  inputViewWrapper: {
+    paddingVertical: 15,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+  },
   heading: {
     fontSize: 22,
     fontWeight: '600',
@@ -25,9 +30,10 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     height: 50,
-    fontSize: 16,
+    fontSize: 14,
   },
   formActions: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
