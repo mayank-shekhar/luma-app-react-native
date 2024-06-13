@@ -1,70 +1,202 @@
 import * as React from 'react';
-import {Button, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import Icon from 'react-native-vector-icons/Ionicons';
-import {HomeScreen} from '../../../features';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  HomeScreen,
+  SettingsScreen,
+  LocationScreen,
+  ProductsStackScreen,
+  PersonalizationPage,
+} from '../../../features';
 
-// function HomeScreen() {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-//       <Text>Home!</Text>
-//     </View>
-//   );
-// }
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function ProductsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Products!</Text>
-    </View>
-  );
-}
-
-function PersonalisationScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Personalisation!</Text>
-    </View>
-  );
-}
-
-function LocationScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Location!</Text>
-    </View>
-  );
-}
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import messaging from '@react-native-firebase/messaging';
+import {useAppState, useDispatch} from '../../../hooks';
+import {
+  setAppTrackingTransparencyStatus,
+  setConfigurationMode,
+} from '../../../reducers/actions';
+import {Alert, SafeAreaView, Platform, View, Pressable} from 'react-native';
+import {DisclaimerView} from '../../../components';
+import {useFocusEffect, useTheme} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
+type IconType = {
+  focused: boolean;
+  color: string;
+  size: number;
+};
+
 export default function ApplicationNavigator() {
-  const getHomeHeaderRight = () => {
-    return <Button title="User" />;
+  const dispatch = useDispatch();
+  const {colors} = useTheme();
+  const [showDisclaimer, setShowDisclaimer] = React.useState(
+    Platform.OS === 'ios',
+  );
+  const [appTrackingTransparencyStatus, setAppTTStatus] = React.useState('');
+  const {
+    config: {isConfigurationModeEnabled},
+  } = useAppState();
+
+  const requestAppTrackingPermission = async () => {
+    check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      setAppTTStatus(result);
+      dispatch(setAppTrackingTransparencyStatus(result));
+      if (result === RESULTS.GRANTED) {
+        setShowDisclaimer(false);
+      }
+    });
+  };
+
+  const askForAppTrackingPermission = async () => {
+    request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY).then(result => {
+      dispatch(setAppTrackingTransparencyStatus(result));
+      if (result === RESULTS.GRANTED) {
+        setShowDisclaimer(false);
+      }
+    });
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (Platform.OS === 'ios') {
+        requestAppTrackingPermission();
+      }
+    }, []),
+  );
+
+  React.useEffect(() => {
+    askForAppTrackingPermission();
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const getTabBarIcon = (
+    tabName: string,
+    props: IconType,
+  ): React.ReactElement => {
+    switch (tabName) {
+      case 'home':
+        return (
+          <Icon
+            name={props.focused ? 'home' : 'home-outline'}
+            color={props.color}
+            size={props.size}
+          />
+        );
+      case 'products':
+        return (
+          <Icon
+            name={props.focused ? 'cart' : 'cart-outline'}
+            color={props.color}
+            size={props.size}
+          />
+        );
+      case 'personalisation':
+        return (
+          <Icon
+            name={props.focused ? 'disc' : 'disc-outline'}
+            color={props.color}
+            size={props.size}
+          />
+        );
+      case 'location':
+        return (
+          <Icon
+            name={props.focused ? 'location' : 'location-outline'}
+            color={props.color}
+            size={props.size}
+          />
+        );
+      case 'settings':
+        return (
+          <Icon
+            name={props.focused ? 'cog' : 'cog-outline'}
+            color={props.color}
+            size={props.size}
+          />
+        );
+    }
+    return (
+      <Icon
+        name={props.focused ? 'home' : 'home-outline'}
+        color={props.color}
+        size={props.size}
+      />
+    );
+  };
+
+  const onSettingsTap = () => {
+    dispatch(setConfigurationMode(!isConfigurationModeEnabled));
+  };
+
+  const settingsRightIcon = () => {
+    return (
+      <View style={{paddingHorizontal: 15}}>
+        <Pressable onPress={onSettingsTap}>
+          <Icon name="extension-puzzle" color={colors.border} size={24} />
+        </Pressable>
+      </View>
+    );
   };
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{headerRight: getHomeHeaderRight}}
-        />
-        <Tab.Screen name="Products" component={ProductsScreen} />
-        <Tab.Screen name="Personalisation" component={PersonalisationScreen} />
-        <Tab.Screen name="Location" component={LocationScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      {showDisclaimer ? (
+        <SafeAreaView>
+          <DisclaimerView
+            appTrackingTransparencyStatus={appTrackingTransparencyStatus}
+            onContinueClick={askForAppTrackingPermission}
+          />
+        </SafeAreaView>
+      ) : (
+        <Tab.Navigator>
+          <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('home', props),
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Products"
+            component={ProductsStackScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('products', props),
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Personalisation"
+            component={PersonalizationPage}
+            options={{
+              headerShown: false,
+              tabBarIcon: (props: IconType) =>
+                getTabBarIcon('personalisation', props),
+            }}
+          />
+          {/* <Tab.Screen
+            name="Location"
+            component={LocationScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
+            }}
+          /> */}
+          <Tab.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{
+              tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
+              headerRight: settingsRightIcon,
+            }}
+          />
+        </Tab.Navigator>
+      )}
+    </>
   );
 }
