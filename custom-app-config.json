@@ -15,7 +15,7 @@
       "logo": "https://ridmaur.github.io/tutorial/luma/images/luma-logo01.png",
       "productsType": "Products",
       "productsSystemImage": "cart",
-      "currency": "€"
+      "currency": "$"
   },
   "testPush": {
       "name": "Mobile App Test Push",
