@@ -67,5 +67,8 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "resolutions": {
+    "braces": "^3.0.3"
   }
 }
