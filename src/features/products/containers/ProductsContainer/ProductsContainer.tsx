@@ -1,4 +1,4 @@
-import {Platform, Text, View, ScrollView} from 'react-native';
+import {Platform, View, ScrollView, SafeAreaView} from 'react-native';
 import * as React from 'react';
 
 import productsCommonStyles from '../../products.common.styles';
@@ -7,13 +7,10 @@ import {useEffect} from 'react';
 import {loadProducts} from '../../../../api';
 import {Products} from '../../../../models/Products.ts';
 import {FullScreenLoader} from '../../../../components/index.ts';
-// import {useTheme} from '@react-navigation/native';
 import {useMobileSDK} from '../../../../hooks/useAppStore.ts';
 import {useFocusEffect} from '@react-navigation/native';
 
 function ProductsContainer({navigation}: {navigation: any}) {
-  // const {colors} = useTheme();
-
   const [products, setProducts] = React.useState<Products>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
   const mobileSDK = useMobileSDK();
@@ -49,24 +46,21 @@ function ProductsContainer({navigation}: {navigation: any}) {
   return loading ? (
     <FullScreenLoader />
   ) : (
-    <ScrollView>
-      <View style={productsCommonStyles.wrapper}>
-        {/* {Platform.OS === 'ios' && (
-          <Text style={[productsCommonStyles.header, {color: colors.text}]}>
-            Products
-          </Text>
-        )} */}
-        {products.length > 0 && (
-          <>
-            <FeaturedProductsList
-              navigation={navigation}
-              products={featuredProducts}
-            />
-            <ProductsList navigation={navigation} products={products} />
-          </>
-        )}
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={productsCommonStyles.wrapper}>
+          {products.length > 0 && (
+            <>
+              <FeaturedProductsList
+                navigation={navigation}
+                products={featuredProducts}
+              />
+              <ProductsList navigation={navigation} products={products} />
+            </>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

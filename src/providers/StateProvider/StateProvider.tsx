@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppState} from 'react-native';
+import {AppState, SafeAreaView, Text} from 'react-native';
 import {
   ActionType,
   setConfiguration,
@@ -11,9 +11,12 @@ import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
 import DeviceInfo from 'react-native-device-info';
 import {PermissionStatus} from 'react-native-permissions';
+import configurationData from '../../models/data/configuration.json';
+import {saveAppConfig} from '../../reducers/storage';
 
 export type AppplicationStateType = {
   isReady: boolean;
+  appConfig: Configuration | null;
 
   // home screen state
   home: {
@@ -66,20 +69,25 @@ export type StateProviderProps = {
 };
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
-  const [config, setConfig] = React.useState<Configuration | null>(null);
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  const fetchConfiguration = async () => {
-    // Fetch configuration
-    return await loadConfiguration();
-  };
+  const [config, setConfig] = React.useState<Configuration | null>(null);
 
   React.useEffect(() => {
     // Load configuration
-    fetchConfiguration().then(configuration => {
-      setConfig(configuration);
-      dispatch(setConfiguration(configuration));
-    });
+    loadConfiguration()
+      .then(configuration => {
+        saveAppConfig(configurationData);
+        setConfig(configuration);
+      })
+      .catch(_ => {
+        console.log(
+          'Error loading configuration in StateProvider',
+          configurationData,
+        );
+        saveAppConfig(configurationData);
+        setConfig(configurationData);
+      });
+
     DeviceInfo.getDeviceToken()
       .then(deviceToken => {
         // iOS: "a2Jqsd0kanz..."
@@ -93,9 +101,19 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
         // dispatch(setDeviceToken('Not physical device'));
       });
   }, []);
-  const MobileSDKInstance = React.useMemo(() => {
-    return new MobileSDK(state, dispatch, config as Configuration);
-  }, [state, dispatch, config]);
+
+  // React.useEffect(() => {
+  //   if (config) {
+  //     dispatch(setConfiguration(config));
+  //   }
+  // }, [config]);
+
+  const MobileSDKInstance = new MobileSDK(
+    state,
+    dispatch,
+    config as Configuration,
+  );
+
   return config ? (
     <StateContext.Provider
       value={{
@@ -105,7 +123,11 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
       }}>
       {children}
     </StateContext.Provider>
-  ) : null;
+  ) : (
+    <SafeAreaView>
+      <Text>Config not provided</Text>
+    </SafeAreaView>
+  );
 }
 
 export default StateProvider;

@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   HomeScreen,
   SettingsScreen,
-  LocationScreen,
   ProductsStackScreen,
   PersonalizationPage,
 } from '../../../features';
@@ -31,9 +30,7 @@ type IconType = {
 export default function ApplicationNavigator() {
   const dispatch = useDispatch();
   const {colors} = useTheme();
-  const [showDisclaimer, setShowDisclaimer] = React.useState(
-    Platform.OS === 'ios',
-  );
+  const [showDisclaimer, setShowDisclaimer] = React.useState(false);
   const [appTrackingTransparencyStatus, setAppTTStatus] = React.useState('');
   const {
     config: {isConfigurationModeEnabled},
@@ -74,6 +71,12 @@ export default function ApplicationNavigator() {
 
     return unsubscribe;
   }, []);
+
+  React.useEffect(() => {
+    if (Platform.OS === 'ios' && appTrackingTransparencyStatus === '') {
+      setShowDisclaimer(true);
+    }
+  }, [Platform, appTrackingTransparencyStatus]);
 
   const getTabBarIcon = (
     tabName: string,
@@ -180,19 +183,13 @@ export default function ApplicationNavigator() {
                 getTabBarIcon('personalisation', props),
             }}
           />
-          {/* <Tab.Screen
-            name="Location"
-            component={LocationScreen}
-            options={{
-              tabBarIcon: (props: IconType) => getTabBarIcon('location', props),
-            }}
-          /> */}
           <Tab.Screen
             name="Settings"
             component={SettingsScreen}
             options={{
               tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
               headerRight: settingsRightIcon,
+              headerShown: false,
             }}
           />
         </Tab.Navigator>
