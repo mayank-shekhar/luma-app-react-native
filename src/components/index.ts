@@ -7,3 +7,4 @@ export * from './CustomFlatList/Item';
 export {default as AccordionItem} from './AccordionItem/AccordionItem';
 export {default as DisclaimerView} from './DisclaimerView/DisclaimerView';
 export {default as PlatformButton} from './Button/Button';
+export {default as AppEntryPoint} from './EntryPoint/EntryPoint';

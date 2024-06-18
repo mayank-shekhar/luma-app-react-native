@@ -533,7 +533,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LumaAppReactNative/LumaAppReactNative.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RS7UL4T724;
+				DEVELOPMENT_TEAM = FKGEE875K4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LumaAppReactNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -557,7 +557,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.luma.tutorial.reactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Luma.reactnative;
 				PRODUCT_NAME = LumaAppReactNative;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -576,7 +576,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LumaAppReactNative/LumaAppReactNative.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RS7UL4T724;
+				DEVELOPMENT_TEAM = FKGEE875K4;
 				INFOPLIST_FILE = LumaAppReactNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,7 +600,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.luma.tutorial.reactnative;
+				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.Luma.reactnative;
 				PRODUCT_NAME = LumaAppReactNative;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -683,10 +683,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -758,10 +755,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

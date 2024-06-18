@@ -14,9 +14,9 @@ export default function ConfigurationLocationSection() {
   const dispatch = useDispatch();
   const commonStyles = CommonStyles(colors);
 
-  // const mobileSDK = useMobileSDK();
   const {
-    config: {configurationLocation, deviceToken, appConfig},
+    appConfig,
+    config: {configurationLocation, deviceToken},
   } = useAppState();
   const [configPath, setConfigPath] = React.useState(
     configurationLocation as string,

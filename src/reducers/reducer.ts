@@ -5,7 +5,7 @@ export const InitialAppState: AppplicationStateType = {
   // configLocation: '',
   // configuration: undefined,
   isReady: false,
-  appConfig: null,
+  appConfig: undefined,
   home: {
     userProfile: {
       isPaidUser: false,
