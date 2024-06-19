@@ -122,6 +122,65 @@ Now that you have successfully run the app, let's debug it.
 
 You've successfully run and modified your React Native App. :partying_face:
 
+## Setting up Firebase - iOS
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Click on **Add Project**.
+3. Enter the name of your project and click on **Continue**.
+4. Click on **Continue**.
+5. Click on **Create Project**.
+6. Click on **Continue**.
+7. Click on **iOS**.
+8. Enter the **iOS bundle ID** of your project and click on **Register App**.
+9. Download the `GoogleService-Info.plist` file and place it in the `ios` directory of your project.
+
+## Setting up Firebase - Android
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Click on **Add Project**.
+3. Enter the name of your project and click on **Continue**.
+4. Click on **Continue**.
+5. Click on **Create Project**.
+6. Click on **Continue**.
+7. Click on **Android**.
+8. Enter the **Android package name** of your project and click on **Register App**.
+9. Download the `google-services.json` file and place it in the `android/app` directory of your project.
+10. Open the `android/build.gradle` file and add the following line to the `dependencies` block:
+
+```gradle
+classpath 'com.google.gms:google-services:4.3.10'
+```
+
+11. Open the `android/app/build.gradle` file and add the following line to the `dependencies` block:
+
+```gradle
+apply plugin: 'com.google.gms.google-services'
+```
+
+12. Open the `android/app/build.gradle` file and add the following line to the `dependencies` block:
+
+```gradle
+implementation platform('com.google.firebase:firebase-bom:28.4.0')
+```
+
+13. Open the `android/app/build.gradle` file and add the following line to the `dependencies` block:
+
+```gradle
+implementation 'com.google.firebase:firebase-messaging'
+```
+
+14. Open the `android/app/src/main/AndroidManifest.xml` file and add the following lines before the closing `</application>` tag:
+
+```xml
+<meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@drawable/ic_stat_ic_notification" />
+    <meta-data
+        android:name="com.google.firebase.messaging.default_notification_color"
+    />
+```
+
+
 ### Now what?
 
 - If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
