@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Platform} from 'react-native';
+import {View, Text, Platform, SafeAreaView} from 'react-native';
 import {useFocusEffect, useTheme} from '@react-navigation/native';
 import {loadDecisions} from '../../../../api/decisions';
 import {Decision} from '../../../../models/Decision';
@@ -35,18 +35,20 @@ export default function EdgePersonalizationView() {
   );
 
   return (
-    <View style={EdgePersonalizationViewStyles.container}>
-      {!loaded ? (
-        <FullScreenLoader />
-      ) : (
-        <>
-          {decisions.map(decision => {
-            return (
-              <EdgeOffersView key={decision.activityId} decision={decision} />
-            );
-          })}
-        </>
-      )}
-    </View>
+    <SafeAreaView>
+      <View style={EdgePersonalizationViewStyles.container}>
+        {!loaded ? (
+          <FullScreenLoader />
+        ) : (
+          <>
+            {decisions.map(decision => {
+              return (
+                <EdgeOffersView key={decision.activityId} decision={decision} />
+              );
+            })}
+          </>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }

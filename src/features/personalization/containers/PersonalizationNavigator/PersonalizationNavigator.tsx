@@ -11,6 +11,11 @@ function PersonalizationNavigator() {
       <PersonalizationNavigatorStack.Screen
         name="Personalization"
         component={EdgePersonalizationView}
+        options={{
+          headerShown: true,
+          headerLargeTitle: true,
+          headerTransparent: true,
+        }}
       />
       <PersonalizationNavigatorStack.Group
         screenOptions={{presentation: 'modal'}}>

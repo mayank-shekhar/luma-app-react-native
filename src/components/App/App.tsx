@@ -1,118 +1,92 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useEffect} from 'react';
+import {MobileCore} from '@adobe/react-native-aepcore';
+import {ApplicationNavigator} from '../../navigation/containers';
+import {Alert, PermissionsAndroid, Platform, StatusBar} from 'react-native';
+import messaging from '@react-native-firebase/messaging';
+import {useDispatch} from '../../hooks';
+import {setDeviceToken} from '../../reducers/actions';
+import {useTheme} from '@react-navigation/native';
+import {useColorScheme} from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+async function requestUserPermission(): Promise<boolean> {
+  try {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+    if (enabled) {
+      console.log(
+        `\n Push notification Authorization status: ${authStatus} \n`,
+      );
+    }
+    return Promise.resolve(enabled);
+  } catch (e) {
+    return Promise.reject(false);
+  }
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+async function registerForPushNotifications(): Promise<string> {
+  if (Platform.OS === 'ios') {
+    try {
+      await messaging().registerDeviceForRemoteMessages();
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  try {
+    let token = '';
+    if (Platform.OS === 'ios') {
+      token = (await messaging().getAPNSToken()) as string;
+    } else {
+      token = await messaging().getToken();
+    }
+    return Promise.resolve(token);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+function App() {
+  const dispatch = useDispatch();
+
+  const configurePushNotifications = async () => {
+    try {
+      await requestUserPermission();
+    } catch (e) {
+      Alert.alert('Failed to request push notification permission');
+    }
+    const token = await registerForPushNotifications();
+    console.log('\n' + 'Push notification token:', token + '\n');
+    MobileCore.setPushIdentifier(token);
+    dispatch(setDeviceToken(token));
   };
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
+
+    configurePushNotifications();
+  }, []);
+
+  const {colors} = useTheme();
+  const scheme = useColorScheme();
+
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+        animated={true}
+        backgroundColor={colors.background}
+        barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+        showHideTransition={'fade'}
+        hidden={false}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <ApplicationNavigator />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

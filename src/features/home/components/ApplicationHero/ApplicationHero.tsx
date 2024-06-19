@@ -3,9 +3,11 @@ import {View, Text, Image} from 'react-native';
 
 import styles from './ApplicationHero.styles';
 import {useTheme} from '@react-navigation/native';
+import {useAppState} from '../../../../hooks';
 
 function ApplicationHero() {
   const {colors} = useTheme();
+  const {appConfig} = useAppState();
   return (
     <View style={styles.wrapper}>
       {/* <Text style={[styles.header, {color: colors.text}]}>Home</Text> */}
@@ -20,7 +22,9 @@ function ApplicationHero() {
           <Text style={[styles.heroText, {color: colors.text}]}>
             Welcome to the...
           </Text>
-          <Text style={[styles.brandName, {color: colors.text}]}>Luma</Text>
+          <Text style={[styles.brandName, {color: colors.text}]}>
+            {appConfig?.customer?.name}
+          </Text>
           <Text style={[styles.heroText, {color: colors.text}]}>
             React Native Sample App!
           </Text>

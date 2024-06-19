@@ -42,8 +42,8 @@ export default function SettingsStyles(colors: Theme['colors']) {
       marginVertical: 10,
     },
     settingsSectionWrapper: {
-      marginTop: 30,
       flexDirection: 'column',
+      marginBottom: 20,
     },
     sectionHeader: {
       fontWeight: '400',

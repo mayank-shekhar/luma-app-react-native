@@ -98,7 +98,11 @@ function ProductsStackScreen() {
       <ProductsStack.Screen
         name="Products "
         component={ProductsContainer}
-        // options={{headerShown: Platform.OS === 'ios' ? false : true}}
+        options={{
+          headerShown: true,
+          headerLargeTitle: true,
+          headerTransparent: true,
+        }}
       />
       <ProductsStack.Screen
         name="Details"

@@ -6,6 +6,7 @@ import {AccordionItem} from '../../../../components';
 import CommonStyles from '../../../../styles/common.styles';
 import {useAppState, useDispatch} from '../../../../hooks';
 import {setConfigLocation} from '../../../../reducers/actions';
+import {saveConfigurationPath} from '../../../../reducers/storage';
 
 export default function ConfigurationLocationSection() {
   const {colors} = useTheme();
@@ -13,13 +14,17 @@ export default function ConfigurationLocationSection() {
   const dispatch = useDispatch();
   const commonStyles = CommonStyles(colors);
 
-  // const mobileSDK = useMobileSDK();
   const {
-    config: {configurationLocation, deviceToken, appConfig},
+    appConfig,
+    config: {configurationLocation, deviceToken},
   } = useAppState();
+  const [configPath, setConfigPath] = React.useState(
+    configurationLocation as string,
+  );
 
-  const onConfigLocationChange = (text: string) => {
-    dispatch(setConfigLocation(text));
+  const onConfigLocationChange = () => {
+    dispatch(setConfigLocation(configPath));
+    saveConfigurationPath(configPath);
     raiseRestartAlert();
   };
 
@@ -36,8 +41,11 @@ export default function ConfigurationLocationSection() {
         <TextInput
           style={styles.textInputBox}
           placeholder="Path"
-          onEndEditing={event => onConfigLocationChange(event.nativeEvent.text)}
-          value={configurationLocation}
+          onChange={event => setConfigPath(event.nativeEvent.text)}
+          onEndEditing={onConfigLocationChange}
+          // onChangeText={text => onConfigLocationChange(text)}
+          // onEndEditing={event => onConfigLocationChange(event.nativeEvent.text)}
+          value={configPath}
         />
         <View style={styles.configurationWrapper}>
           <AccordionItem

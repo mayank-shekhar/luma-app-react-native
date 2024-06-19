@@ -5,6 +5,7 @@ export const InitialAppState: AppplicationStateType = {
   // configLocation: '',
   // configuration: undefined,
   isReady: false,
+  appConfig: undefined,
   home: {
     userProfile: {
       isPaidUser: false,
@@ -23,7 +24,7 @@ export const InitialAppState: AppplicationStateType = {
     appTrackingTransparencyStatus: 'unavailable',
     deviceToken: '',
     deviceId: '',
-    isConfigurationModeEnabled: false,
+    isConfigurationModeEnabled: true,
     isTestProfileEnabled: false,
   },
 };
@@ -101,10 +102,7 @@ function appReducer(
     case ActionTypes.SET_CONFIGURATION:
       return {
         ...state,
-        config: {
-          ...state.config,
-          appConfig: action.payload,
-        },
+        appConfig: action.payload,
       };
     case ActionTypes.SET_TEST_PROFILE_ENABLED:
       return {

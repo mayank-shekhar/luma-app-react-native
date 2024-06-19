@@ -1,19 +1,14 @@
 import * as React from 'react';
 import {AppState} from 'react-native';
-import {
-  ActionType,
-  setConfiguration,
-  setDeviceToken,
-} from '../../reducers/actions';
+import {ActionType} from '../../reducers/actions';
 import {InitialAppState} from '../../reducers/reducer';
 import {MobileSDK} from '../../utils/MobileSDK';
-import {loadConfiguration} from '../../api/configuration';
 import {Configuration} from '../../models/Configuration';
-import DeviceInfo from 'react-native-device-info';
 import {PermissionStatus} from 'react-native-permissions';
 
 export type AppplicationStateType = {
   isReady: boolean;
+  appConfig: Configuration | undefined;
 
   // home screen state
   home: {
@@ -66,37 +61,15 @@ export type StateProviderProps = {
 };
 
 function StateProvider({reducer, initialState, children}: StateProviderProps) {
-  const [config, setConfig] = React.useState<Configuration | null>(null);
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const fetchConfiguration = async () => {
-    // Fetch configuration
-    return await loadConfiguration();
-  };
+  const MobileSDKInstance = new MobileSDK(
+    state,
+    dispatch,
+    state?.appConfig as Configuration,
+  );
 
-  React.useEffect(() => {
-    // Load configuration
-    fetchConfiguration().then(configuration => {
-      setConfig(configuration);
-      dispatch(setConfiguration(configuration));
-    });
-    DeviceInfo.getDeviceToken()
-      .then(deviceToken => {
-        // iOS: "a2Jqsd0kanz..."
-        if (deviceToken) {
-          console.info('Device token:', deviceToken);
-          dispatch(setDeviceToken(deviceToken));
-        }
-      })
-      .catch(err => {
-        console.error('Error getting device token:', err);
-        // dispatch(setDeviceToken('Not physical device'));
-      });
-  }, []);
-  const MobileSDKInstance = React.useMemo(() => {
-    return new MobileSDK(state, dispatch, config as Configuration);
-  }, [state, dispatch, config]);
-  return config ? (
+  return (
     <StateContext.Provider
       value={{
         state,
@@ -105,7 +78,7 @@ function StateProvider({reducer, initialState, children}: StateProviderProps) {
       }}>
       {children}
     </StateContext.Provider>
-  ) : null;
+  );
 }
 
 export default StateProvider;

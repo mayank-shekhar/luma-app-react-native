@@ -3,7 +3,7 @@ import {StyleSheet, Platform} from 'react-native';
 export default StyleSheet.create({
   wrapper: {
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 0,
-    paddingTop: Platform.OS === 'ios' ? 50 : 20,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
   },
 
   sectionWrapper: {

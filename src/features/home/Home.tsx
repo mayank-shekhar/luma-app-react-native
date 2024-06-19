@@ -1,5 +1,11 @@
 import * as React from 'react';
-import {View, Pressable, Platform} from 'react-native';
+import {
+  View,
+  Pressable,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
 import ApplicationHero from './components/ApplicationHero/ApplicationHero';
 import IdentitiesList from './components/Identities/Identities';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -18,7 +24,6 @@ function HomeScreen() {
   };
   const refreshInAppMessages = () => {
     Messaging.refreshInAppMessages();
-    console.log('messages refreshed');
   };
   useFocusEffect(
     React.useCallback(() => {
@@ -34,10 +39,14 @@ function HomeScreen() {
   );
 
   return (
-    <View style={{flex: 1, flexDirection: 'column', marginTop: 20}}>
-      <ApplicationHero />
-      <IdentitiesList />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{flexDirection: 'column'}}>
+          <ApplicationHero />
+          {/* <IdentitiesList /> */}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -77,6 +86,8 @@ function RootHomeScreen() {
         component={HomeScreen}
         options={navigation => ({
           headerShown: true,
+          headerLargeTitle: true,
+          headerTransparent: true,
           headerRight: props => getHomePageHeaderRight(props, navigation),
         })}
       />

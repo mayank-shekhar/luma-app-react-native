@@ -39,17 +39,15 @@ function SettingsScreen() {
   return (
     <ScrollView>
       <View style={styles.wrapper}>
-        <SafeAreaView>
-          <Modal
-            animationType="slide"
-            visible={termsModalVisible}
-            presentationStyle="pageSheet"
-            onRequestClose={() => {
-              setTermsModalVisible(!termsModalVisible);
-            }}>
-            <TermsModalContent onClose={() => setTermsModalVisible(false)} />
-          </Modal>
-        </SafeAreaView>
+        <Modal
+          animationType="slide"
+          visible={termsModalVisible}
+          presentationStyle="pageSheet"
+          onRequestClose={() => {
+            setTermsModalVisible(!termsModalVisible);
+          }}>
+          <TermsModalContent onClose={() => setTermsModalVisible(false)} />
+        </Modal>
 
         {/* Configuration section */}
         {isConfigurationModeEnabled && (
@@ -69,4 +67,12 @@ function SettingsScreen() {
   );
 }
 
-export default SettingsScreen;
+function SettingsContainer() {
+  return (
+    <SafeAreaView>
+      <SettingsScreen />
+    </SafeAreaView>
+  );
+}
+
+export default SettingsContainer;
