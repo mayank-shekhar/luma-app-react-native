@@ -1,6 +1,23 @@
 # Luma App (React Native v0.74.1)
 
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+![Luma App](/src/assets/luma-logo01.png)
+
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli) to showcase the integration of Adobe Experience Platform SDKs.
+
+## Screenshots
+
+### Android
+
+| Home Screen | Products | Product Details |
+| --- | --- | --- |
+| ![Home Screen](/screenshots/android/Home.png) | ![Products](/screenshots/android/Products.png) | ![Product Details](/screenshots/android/Product.png) |
+
+### iOS
+
+| Home Screen | Products | Product Details |  Settings |
+| --- | --- | --- | --- |
+| ![Home Screen](/screenshots/ios/Home.png) | ![Products](/screenshots/ios/Products.png) | ![Product Details](/screenshots/ios/Product.png) | ![Settings](/screenshots/ios/Settings.png) |
+
 
 # Packages
 

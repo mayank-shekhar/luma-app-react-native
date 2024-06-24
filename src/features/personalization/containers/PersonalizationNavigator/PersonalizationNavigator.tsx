@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {EdgePersonalizationView} from '..';
 import {PersonalizationDetailsModal} from '../../components';
+import {Platform} from 'react-native';
 
 const PersonalizationNavigatorStack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ function PersonalizationNavigator() {
         options={{
           headerShown: true,
           headerLargeTitle: true,
-          headerTransparent: true,
+          headerTransparent: Platform.OS === 'ios' ? true : false,
         }}
       />
       <PersonalizationNavigatorStack.Group

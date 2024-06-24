@@ -106,6 +106,7 @@ export default function SettingsStyles(colors: Theme['colors']) {
       paddingHorizontal: 20,
       backgroundColor: 'transparent',
       height: 50,
+      color: colors.text,
     },
 
     configurationWrapper: {

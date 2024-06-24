@@ -43,7 +43,7 @@ function HomeScreen() {
       <ScrollView>
         <View style={{flexDirection: 'column'}}>
           <ApplicationHero />
-          {/* <IdentitiesList /> */}
+          <IdentitiesList />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -87,7 +87,7 @@ function RootHomeScreen() {
         options={navigation => ({
           headerShown: true,
           headerLargeTitle: true,
-          headerTransparent: true,
+          headerTransparent: Platform.OS === 'ios' ? true : false,
           headerRight: props => getHomePageHeaderRight(props, navigation),
         })}
       />
@@ -97,7 +97,7 @@ function RootHomeScreen() {
           component={LoginSheet}
           options={navigation => ({
             headerShown: true,
-            headerTransparent: true,
+            headerTransparent: Platform.OS === 'ios' ? true : false,
             headerBackButtonMenuEnabled: false,
             headerBackVisible: false,
             headerTitle: '',

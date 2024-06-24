@@ -101,7 +101,7 @@ function ProductsStackScreen() {
         options={{
           headerShown: true,
           headerLargeTitle: true,
-          headerTransparent: true,
+          headerTransparent: Platform.OS === 'ios' ? true : false,
         }}
       />
       <ProductsStack.Screen

@@ -190,6 +190,7 @@ export default function ApplicationNavigator() {
               tabBarIcon: (props: IconType) => getTabBarIcon('settings', props),
               headerRight: settingsRightIcon,
               headerShown: false,
+              // headerTransparent: Platform.OS === 'ios' ? true : false,
             }}
           />
         </Tab.Navigator>
